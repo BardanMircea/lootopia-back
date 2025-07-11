@@ -1,7 +1,7 @@
 package com.sdv.lootopia.application.service;
 
-import com.lootopia.domain.model.Utilisateur;
-import com.lootopia.domain.ports.UtilisateurRepository;
+import com.sdv.lootopia.domain.model.Utilisateur;
+import com.sdv.lootopia.domain.ports.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
