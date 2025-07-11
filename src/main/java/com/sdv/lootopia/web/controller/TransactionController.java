@@ -2,7 +2,6 @@ package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.domain.model.TransactionCouronnes;
 import com.sdv.lootopia.application.service.TransactionService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +10,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/transactions")
-@RequiredArgsConstructor
 public class TransactionController {
 
     private final TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping
     public ResponseEntity<List<TransactionCouronnes>> getAll() {

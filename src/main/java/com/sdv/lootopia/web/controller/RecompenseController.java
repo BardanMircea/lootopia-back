@@ -2,7 +2,6 @@ package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.domain.model.Recompense;
 import com.sdv.lootopia.application.service.RecompenseService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +10,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/recompenses")
-@RequiredArgsConstructor
 public class RecompenseController {
 
     private final RecompenseService recompenseService;
+
+    public RecompenseController(RecompenseService recompenseService) {
+        this.recompenseService = recompenseService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Recompense>> getAll() {

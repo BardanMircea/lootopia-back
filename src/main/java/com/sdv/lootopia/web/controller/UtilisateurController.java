@@ -2,7 +2,6 @@ package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.application.service.UtilisateurService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +9,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/utilisateurs")
-@RequiredArgsConstructor
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
+
+    public UtilisateurController(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Utilisateur> register(@RequestBody Utilisateur utilisateur) {
