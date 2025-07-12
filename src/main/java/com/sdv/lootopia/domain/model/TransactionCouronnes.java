@@ -17,6 +17,7 @@ public class TransactionCouronnes {
     private Long id;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "utilisateur_id")
     private Utilisateur utilisateur;
 
     private Double montant;

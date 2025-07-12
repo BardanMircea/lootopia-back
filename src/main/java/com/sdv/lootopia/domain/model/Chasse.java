@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,16 +21,32 @@ public class Chasse {
     private String description;
     private Double latitudeCache;
     private Double longitudeCache;
+    private Integer maxParticipants;
+
+    @ManyToOne
+    @JoinColumn(name = "organisateur_id")
+    private Utilisateur organisateur;
 
     @Enumerated(EnumType.STRING)
-    private TypeMonde typeMonde;
+    private TypeMonde typeMonde = TypeMonde.CARTOGRAPHIQUE;
 
-    private Double fraisParticipation;
+    @OneToMany(mappedBy = "chasse")
+    private List<Participation> participations;
+
+
+    @Enumerated(EnumType.STRING)
+    private Mode mode = Mode.PUBLIC;
+
+    private Double fraisParticipation = 0.0;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
 
     public enum TypeMonde {
-        Reel, Cartographique
+        REEL, CARTOGRAPHIQUE
+    }
+
+    public enum Mode {
+        PUBLIC, PRIVATE
     }
 }
 

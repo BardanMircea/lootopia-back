@@ -3,6 +3,9 @@ package com.sdv.lootopia.domain.model;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -17,9 +20,20 @@ public class Utilisateur {
     private String email;
     private String motDePasse;
     private String pseudo;
+    private LocalDateTime dateCreation;
 
-    private boolean mfaActive;
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Participation> participations;
+
+    private boolean isPartenaire = Boolean.FALSE;
+    private boolean mfaActive = Boolean.FALSE;
 
     @Column(nullable = false)
     private Double soldeCouronnes = 0.0;
+
+    private Role role = Role.JOUEUR;
+
+    public enum Role {
+        JOUEUR, ORGANISATEUR
+    }
 }
