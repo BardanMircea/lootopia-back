@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RepereRA {
+public class RepereRa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class RepereRA {
 
     private String nom;
     private String imageMarker;
-    
+
     @ManyToOne
     @JoinColumn(name = "etape_id")
     private Etape etape;
