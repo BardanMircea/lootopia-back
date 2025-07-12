@@ -1,6 +1,7 @@
 package com.sdv.lootopia.application.service;
 
 import com.sdv.lootopia.domain.model.Creusage;
+import com.sdv.lootopia.domain.ports.CreusageRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

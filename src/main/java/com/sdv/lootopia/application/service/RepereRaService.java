@@ -1,6 +1,7 @@
 package com.sdv.lootopia.application.service;
 
 import com.sdv.lootopia.domain.model.RepereRa;
+import com.sdv.lootopia.domain.ports.RepereRaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
