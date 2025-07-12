@@ -17,12 +17,6 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Utilisateur> register(@RequestBody Utilisateur utilisateur) {
-        Utilisateur created = utilisateurService.enregistrer(utilisateur);
-        return ResponseEntity.ok(created);
-    }
-
     @GetMapping("/by-email")
     public ResponseEntity<Utilisateur> getByEmail(@RequestParam String email) {
         Optional<Utilisateur> utilisateur = utilisateurService.getByEmail(email);
