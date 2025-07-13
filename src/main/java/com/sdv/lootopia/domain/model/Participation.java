@@ -29,8 +29,9 @@ public class Participation {
     @OneToMany(mappedBy = "participation")
     private List<Progression> progressions;
 
-
     private LocalDateTime dateInscription;
+
+    @Enumerated(EnumType.STRING)
     private Statut statut = Statut.ACTIF;
 
     public enum Statut {
