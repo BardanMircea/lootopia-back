@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/chasses")
+@RequestMapping("/chasses")
 @RequiredArgsConstructor
 public class ChasseController {
 
