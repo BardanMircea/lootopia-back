@@ -22,6 +22,10 @@ public class Utilisateur {
     private String pseudo;
     private LocalDateTime dateCreation;
 
+    private String activationToken;
+    private LocalDateTime activationTokenExpiration;
+    private boolean compteActif = false;
+
     @OneToMany(mappedBy = "utilisateur")
     private List<Participation> participations;
 
