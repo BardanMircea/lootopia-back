@@ -5,6 +5,7 @@ import com.sdv.lootopia.infrastructure.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,17 +28,27 @@ public class DataSeeder {
         return args -> {
             Utilisateur mircea = new Utilisateur();
             Utilisateur vlad = new Utilisateur();
+            Utilisateur admin = new Utilisateur();
 
             mircea.setPseudo("wheremywagonat");
             mircea.setEmail("mcb@email.ro");
-            mircea.setMotDePasse("pass");
+            mircea.setMotDePasse(new BCryptPasswordEncoder().encode("pass"));
+            mircea.setCompteActif(true);
             mircea.setSoldeCouronnes(100.0);
 
             vlad.setPseudo("yawningBee");
             vlad.setEmail("vp@email.md");
-            vlad.setMotDePasse("pass1");
+            vlad.setMotDePasse(new BCryptPasswordEncoder().encode("pass1"));
+            vlad.setCompteActif(true);
             vlad.setSoldeCouronnes(50.0);
-            utilisateurRepo.saveAll(List.of(mircea, vlad));
+
+            admin.setEmail("admin@lootopia.com");
+            admin.setPseudo("admin");
+            admin.setMotDePasse(new BCryptPasswordEncoder().encode("admin"));
+            admin.setCompteActif(true);
+            admin.setRole(Utilisateur.Role.ADMIN);
+
+            utilisateurRepo.saveAll(List.of(mircea, vlad, admin));
 
             Chasse chasse1 = new Chasse();
             Chasse chasse2 = new Chasse();

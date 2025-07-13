@@ -22,6 +22,11 @@ public class Utilisateur {
     private String pseudo;
     private LocalDateTime dateCreation;
 
+    private String activationToken;
+    private LocalDateTime activationTokenExpiration;
+    private boolean compteActif = false;
+    private boolean rgpdConsent;
+
     @OneToMany(mappedBy = "utilisateur")
     private List<Participation> participations;
 
@@ -31,9 +36,10 @@ public class Utilisateur {
     @Column(nullable = false)
     private Double soldeCouronnes = 0.0;
 
-    private Role role = Role.JOUEUR;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     public enum Role {
-        JOUEUR, ORGANISATEUR
+        USER, ADMIN
     }
 }

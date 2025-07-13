@@ -33,9 +33,12 @@ public class Chasse {
     @OneToMany(mappedBy = "chasse")
     private List<Participation> participations;
 
+    @OneToMany(mappedBy = "chasse", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Etape> etapes;
+
 
     @Enumerated(EnumType.STRING)
-    private Mode mode = Mode.PUBLIC;
+    private Visibilite visibilite = Visibilite.PUBLIC;
 
     private Double fraisParticipation = 0.0;
     private LocalDateTime dateDebut;
@@ -45,7 +48,7 @@ public class Chasse {
         REEL, CARTOGRAPHIQUE
     }
 
-    public enum Mode {
+    public enum Visibilite {
         PUBLIC, PRIVATE
     }
 }

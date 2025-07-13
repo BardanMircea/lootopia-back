@@ -24,4 +24,9 @@ public class ChasseRepositoryAdapter implements ChasseRepository {
 
     @Override
     public Chasse save(Chasse chasse) { return jpa.save(chasse); }
+
+    @Override
+    public List<Chasse> findByOrganisateurId(Long utilisateurId) {
+        return jpa.findByOrganisateurId(utilisateurId);
+    }
 }
