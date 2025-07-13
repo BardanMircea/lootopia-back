@@ -21,6 +21,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         Utilisateur utilisateur = utilisateurRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé avec l'email : " + email));
 
+        if (!utilisateur.isCompteActif()) {
+            throw new UsernameNotFoundException("Compte non activé");
+        }
+
         return new UserPrincipal(utilisateur);
     }
 }
