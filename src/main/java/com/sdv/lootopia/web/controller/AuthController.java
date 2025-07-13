@@ -31,8 +31,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest registrationRequest) {
+        if (!Boolean.TRUE.equals(registrationRequest.getRgpdConsent())) {
+            return ResponseEntity.badRequest().body("Le consentement RGPD est obligatoire.");
+        }
+
         Utilisateur user = new Utilisateur();
         user.setMotDePasse(new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode(registrationRequest.getMotDePasse()));
+        user.setRgpdConsent(true);
         user.setEmail(registrationRequest.getEmail());
         user.setPseudo(registrationRequest.getPseudo());
 
