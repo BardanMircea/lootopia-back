@@ -57,5 +57,16 @@ public class ChasseController {
 
         return ResponseEntity.ok(chasses);
     }
+
+    @GetMapping("/public")
+    public ResponseEntity<List<ChasseApercuDTO>> getChassesPubliques() {
+        List<ChasseApercuDTO> chasses = chasseService.getAll().stream()
+                .filter(ch -> ch.getVisibilite() == Chasse.Visibilite.PUBLIC)
+                .map(ChasseApercuDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(chasses);
+    }
+
 }
 
