@@ -24,4 +24,9 @@ public class UtilisateurRepositoryAdapter implements UtilisateurRepository {
     public Utilisateur save(Utilisateur utilisateur) {
         return jpa.save(utilisateur);
     }
+
+    @Override
+    public Optional<Utilisateur> findByActivationToken(String token) {
+        return jpa.findByActivationToken(token);
+    }
 }

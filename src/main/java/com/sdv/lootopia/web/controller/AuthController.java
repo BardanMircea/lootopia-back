@@ -1,6 +1,7 @@
 package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.domain.model.Utilisateur;
+import com.sdv.lootopia.domain.ports.UtilisateurRepository;
 import com.sdv.lootopia.infrastructure.email.EmailService;
 import com.sdv.lootopia.infrastructure.repository.JpaUtilisateurRepository;
 import com.sdv.lootopia.infrastructure.security.JwtService;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class AuthController {
 
     private final AuthenticationManager authManager;
-    private final JpaUtilisateurRepository utilisateurRepo;
+    private final UtilisateurRepository utilisateurRepo;
     private final JwtService jwtService;
     private final EmailService emailService;
 

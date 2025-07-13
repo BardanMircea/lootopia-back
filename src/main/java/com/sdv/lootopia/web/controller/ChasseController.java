@@ -3,7 +3,6 @@ package com.sdv.lootopia.web.controller;
 import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.application.service.ChasseService;
 import com.sdv.lootopia.domain.model.Utilisateur;
-import com.sdv.lootopia.infrastructure.repository.JpaUtilisateurRepository;
 import com.sdv.lootopia.infrastructure.security.UserPrincipal;
 import com.sdv.lootopia.web.dto.ChasseApercuDTO;
 import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class ChasseController {
 
     private final ChasseService chasseService;
-    private final JpaUtilisateurRepository utilisateurRepo;
 
     @GetMapping
     public List<Chasse> getAllChasses() {
