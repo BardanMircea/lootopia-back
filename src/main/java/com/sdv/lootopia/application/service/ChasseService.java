@@ -4,7 +4,7 @@ import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.domain.model.Recompense;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
-import com.sdv.lootopia.infrastructure.repository.JpaRecompenseRepository;
+import com.sdv.lootopia.domain.ports.RecompenseRepository;
 import com.sdv.lootopia.web.dto.ChasseApercuDTO;
 import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
 import jakarta.transaction.Transactional;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ChasseService {
     private final ChasseRepository chasseRepository;
-    private final JpaRecompenseRepository recompenseRepo;
+    private final RecompenseRepository recompenseRepository;
 
 
     @Transactional
@@ -45,7 +45,7 @@ public class ChasseService {
         recompense.setValeurCouronnes(dto.getMontantRecompense());
         recompense.setDescription("Récompense pour avoir trouvé la cache");
 
-        recompenseRepo.save(recompense);
+        recompenseRepository.save(recompense);
 
         return chasse;
     }
