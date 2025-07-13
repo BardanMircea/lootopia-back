@@ -5,6 +5,7 @@ import com.sdv.lootopia.domain.model.Recompense;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
 import com.sdv.lootopia.infrastructure.repository.JpaRecompenseRepository;
+import com.sdv.lootopia.web.dto.ChasseApercuDTO;
 import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,10 @@ public class ChasseService {
 
 
     @Transactional
-    public Chasse creerNouvelleChasse(NouvelleChasseDTO dto, Utilisateur organisateur) {
+    public Chasse createChasse(NouvelleChasseDTO dto, Utilisateur organisateur) {
         Chasse.TypeMonde typeMonde = Chasse.TypeMonde.valueOf(dto.getTypeMonde().toUpperCase());
         Recompense.TypeRecompense typeRecompense = Recompense.TypeRecompense.valueOf(dto.getTypeRecompense().toUpperCase());
+        Chasse.Visibilite visibilite = Chasse.Visibilite.valueOf(dto.getVisibilite().toUpperCase());
 
         Chasse chasse = new Chasse();
         chasse.setTitre(dto.getTitre());
@@ -33,6 +35,7 @@ public class ChasseService {
         chasse.setTypeMonde(typeMonde);
         chasse.setOrganisateur(organisateur);
         chasse.setFraisParticipation(dto.getFraisParticipation());
+        chasse.setVisibilite(visibilite);
 
         chasseRepository.save(chasse);
 
@@ -45,6 +48,13 @@ public class ChasseService {
         recompenseRepo.save(recompense);
 
         return chasse;
+    }
+
+    public List<ChasseApercuDTO> getChassesCreatedByUtilisateur(Long utilisateurId) {
+        return chasseRepository.findByOrganisateurId(utilisateurId)
+                .stream()
+                .map(ChasseApercuDTO::fromEntity)
+                .toList();
     }
 
     public List<Chasse> getAll() {

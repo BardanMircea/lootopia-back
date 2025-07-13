@@ -27,4 +27,6 @@ public class NouvelleChasseDTO {
     private String typeRecompense = "COURONNES"; //  pour MVP uniquement COURONNES
 
     private Double montantRecompense = 100.0; // MVP
+
+    private String visibilite; // PUBLIC ou PRIVE (PUBLIC par default pour le MVP)
 }

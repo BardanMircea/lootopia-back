@@ -4,6 +4,8 @@ import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.application.service.ChasseService;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.infrastructure.repository.JpaUtilisateurRepository;
+import com.sdv.lootopia.infrastructure.security.UserPrincipal;
+import com.sdv.lootopia.web.dto.ChasseApercuDTO;
 import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +44,18 @@ public class ChasseController {
             return ResponseEntity.badRequest().body("Seules les chasses cartographiques sont autorisées pour l'instant'.");
         }
 
-        Chasse created = chasseService.creerNouvelleChasse(dto, utilisateur);
+        Chasse created = chasseService.createChasse(dto, utilisateur);
         return ResponseEntity.ok("Chasse créée avec succès. ID: " + created.getId());
+    }
+
+    @GetMapping("/mes-chasses")
+    public ResponseEntity<List<ChasseApercuDTO>> getChassesCreatedByUtilisateur(
+            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+
+        Utilisateur utilisateur = userPrincipal.getUtilisateur();
+        List<ChasseApercuDTO> chasses = chasseService.getChassesCreatedByUtilisateur(utilisateur.getId());
+
+        return ResponseEntity.ok(chasses);
     }
 }
 
