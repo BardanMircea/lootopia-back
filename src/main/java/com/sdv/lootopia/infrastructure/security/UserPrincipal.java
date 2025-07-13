@@ -2,10 +2,12 @@ package com.sdv.lootopia.infrastructure.security;
 
 import com.sdv.lootopia.domain.model.Utilisateur;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
@@ -17,7 +19,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList(); // Pas de rôles pour l'instant
+        return List.of(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name()));
     }
 
     @Override

@@ -26,6 +26,8 @@ public class Progression {
     private Etape etape;
 
     private LocalDateTime dateValidation;
+
+    @Enumerated(EnumType.STRING)
     private Statut statut = Statut.EN_COURS;
 
     public enum Statut {

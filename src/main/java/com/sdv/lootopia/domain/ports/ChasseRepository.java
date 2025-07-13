@@ -8,4 +8,6 @@ public interface ChasseRepository {
     List<Chasse> findAll();
     Optional<Chasse> findById(Long id);
     Chasse save(Chasse chasse);
+    List<Chasse> findByOrganisateurId(Long utilisateurId);
+
 }

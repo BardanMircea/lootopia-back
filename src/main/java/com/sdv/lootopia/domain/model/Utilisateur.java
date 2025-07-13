@@ -36,9 +36,10 @@ public class Utilisateur {
     @Column(nullable = false)
     private Double soldeCouronnes = 0.0;
 
-    private Role role = Role.JOUEUR;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     public enum Role {
-        JOUEUR, ORGANISATEUR
+        USER, ADMIN
     }
 }
