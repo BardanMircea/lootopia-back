@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class NouvelleEtapeDTO {
+public class EtapeRequestDTO {
 
     @NotNull
     private Long chasseId;

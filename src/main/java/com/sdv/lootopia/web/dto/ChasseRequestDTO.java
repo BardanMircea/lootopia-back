@@ -3,9 +3,13 @@ package com.sdv.lootopia.web.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
-public class NouvelleChasseDTO {
+@Getter
+@Setter
+public class ChasseRequestDTO {
 
     @NotBlank
     private String titre;

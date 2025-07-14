@@ -1,14 +1,12 @@
 package com.sdv.lootopia.web.dto;
 
-
 import lombok.*;
 
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class AuthRequest {
-    private String email;
-    private String motDePasse;
+public class ParticipationRequestDTO {
+    private Long chasseId;
 }

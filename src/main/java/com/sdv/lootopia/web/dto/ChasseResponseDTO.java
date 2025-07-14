@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ChasseApercuDTO {
+public class ChasseResponseDTO {
 
     private Long id;
     private String titre;
@@ -27,11 +27,11 @@ public class ChasseApercuDTO {
     private LocalDateTime dateFin;
     private Integer nombreEtapes;
     private Integer nombreParticipants;
-    private List<EtapeApercuDTO> etapes;
+    private List<EtapeReponseDTO> etapes;
 
     // Méthode pour mapper depuis une entité Chasse :
-    public static ChasseApercuDTO fromEntity(Chasse chasse) {
-        ChasseApercuDTO dto = new ChasseApercuDTO();
+    public static ChasseResponseDTO fromEntity(Chasse chasse) {
+        ChasseResponseDTO dto = new ChasseResponseDTO();
         dto.setId(chasse.getId());
         dto.setTitre(chasse.getTitre());
         dto.setDescription(chasse.getDescription());
@@ -47,7 +47,7 @@ public class ChasseApercuDTO {
         dto.setEtapes(new ArrayList<>());
 
         if(chasse.getEtapes() != null)
-            for (Etape e : chasse.getEtapes()) dto.getEtapes().add(EtapeApercuDTO.fromEntity(e));
+            for (Etape e : chasse.getEtapes()) dto.getEtapes().add(EtapeReponseDTO.fromEntity(e));
 
         return dto;
     }

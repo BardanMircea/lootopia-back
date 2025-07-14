@@ -5,7 +5,7 @@ import com.sdv.lootopia.domain.model.Etape;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
 import com.sdv.lootopia.domain.ports.EtapeRepository;
-import com.sdv.lootopia.web.dto.NouvelleEtapeDTO;
+import com.sdv.lootopia.web.dto.EtapeRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class EtapeService {
     public Optional<Etape> getById(Long id) { return etapeRepository.findById(id); }
     public Etape save(Etape etape) { return etapeRepository.save(etape); }
 
-    public Chasse ajouterEtape(NouvelleEtapeDTO dto, Utilisateur organisateur) {
+    public Chasse ajouterEtape(EtapeRequestDTO dto, Utilisateur organisateur) {
         Chasse chasse = chasseRepository.findById(dto.getChasseId())
                 .orElseThrow(() -> new IllegalArgumentException("Chasse introuvable"));
 

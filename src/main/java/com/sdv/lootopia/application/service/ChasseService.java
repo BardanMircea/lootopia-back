@@ -5,8 +5,8 @@ import com.sdv.lootopia.domain.model.Recompense;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
 import com.sdv.lootopia.domain.ports.RecompenseRepository;
-import com.sdv.lootopia.web.dto.ChasseApercuDTO;
-import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
+import com.sdv.lootopia.web.dto.ChasseResponseDTO;
+import com.sdv.lootopia.web.dto.ChasseRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ChasseService {
 
 
     @Transactional
-    public ChasseApercuDTO createChasse(NouvelleChasseDTO dto, Utilisateur organisateur) {
+    public ChasseResponseDTO createChasse(ChasseRequestDTO dto, Utilisateur organisateur) {
         Chasse.TypeMonde typeMonde = Chasse.TypeMonde.valueOf(dto.getTypeMonde().toUpperCase());
         Recompense.TypeRecompense typeRecompense = Recompense.TypeRecompense.valueOf(dto.getTypeRecompense().toUpperCase());
         Chasse.Visibilite visibilite = Chasse.Visibilite.valueOf(dto.getVisibilite().toUpperCase());
@@ -47,13 +47,13 @@ public class ChasseService {
 
         recompenseRepository.save(recompense);
 
-        return ChasseApercuDTO.fromEntity(chasseSauvegardee);
+        return ChasseResponseDTO.fromEntity(chasseSauvegardee);
     }
 
-    public List<ChasseApercuDTO> getChassesCreatedByUtilisateur(Long utilisateurId) {
+    public List<ChasseResponseDTO> getChassesCreatedByUtilisateur(Long utilisateurId) {
         return chasseRepository.findByOrganisateurId(utilisateurId)
                 .stream()
-                .map(ChasseApercuDTO::fromEntity)
+                .map(ChasseResponseDTO::fromEntity)
                 .toList();
     }
 
