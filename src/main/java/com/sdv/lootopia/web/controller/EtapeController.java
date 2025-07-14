@@ -1,34 +1,47 @@
 package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.application.service.EtapeService;
+import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.domain.model.Etape;
+import com.sdv.lootopia.domain.model.Utilisateur;
+import com.sdv.lootopia.infrastructure.security.UserPrincipal;
+import com.sdv.lootopia.web.dto.ChasseApercuDTO;
+import com.sdv.lootopia.web.dto.NouvelleEtapeDTO;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/etapes")
+@RequiredArgsConstructor
 public class EtapeController {
 
-    private final EtapeService service;
+    private final EtapeService etapeService;
 
-    public EtapeController(EtapeService service) {
-        this.service = service;
+    @PostMapping
+    public ResponseEntity<?> createEtape(@RequestBody @Valid NouvelleEtapeDTO dto,
+                                        @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        Utilisateur utilisateur = userPrincipal.getUtilisateur();
+        Chasse chasseMere = etapeService.ajouterEtape(dto, utilisateur);
+        return ResponseEntity.ok(ChasseApercuDTO.fromEntity(chasseMere));
+    }
+
+    @GetMapping("/chasse/{chasseId}")
+    public ResponseEntity<List<Etape>> listerParChasse(@PathVariable Long chasseId) {
+        return ResponseEntity.ok(etapeService.listerEtapesParChasse(chasseId));
     }
 
     @GetMapping
-    public List<Etape> getAll() { return service.getAll(); }
+    public List<Etape> getAll() { return etapeService.getAll(); }
 
     @GetMapping("/{id}")
     public ResponseEntity<Etape> getById(@PathVariable Long id) {
-        return service.getById(id)
+        return etapeService.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Etape create(@RequestBody Etape etape) {
-        return service.save(etape);
     }
 }

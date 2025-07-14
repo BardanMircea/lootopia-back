@@ -9,4 +9,5 @@ public interface EtapeRepository {
     List<Etape> findAll();
     Optional<Etape> findById(Long id);
     Etape save(Etape etape);
+    List<Etape> findByChasseId(Long chasseId);
 }

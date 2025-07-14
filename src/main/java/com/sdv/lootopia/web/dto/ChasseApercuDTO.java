@@ -1,9 +1,12 @@
 package com.sdv.lootopia.web.dto;
 
 import com.sdv.lootopia.domain.model.Chasse;
+import com.sdv.lootopia.domain.model.Etape;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class ChasseApercuDTO {
 
+    private Long id;
     private String titre;
     private String description;
     private String monde;          // CARTOGRAPHIQUE ou REEL
@@ -23,10 +27,12 @@ public class ChasseApercuDTO {
     private LocalDateTime dateFin;
     private Integer nombreEtapes;
     private Integer nombreParticipants;
+    private List<EtapeApercuDTO> etapes;
 
-    // Méthode utilitaire pour mapper depuis une entité Chasse :
+    // Méthode pour mapper depuis une entité Chasse :
     public static ChasseApercuDTO fromEntity(Chasse chasse) {
         ChasseApercuDTO dto = new ChasseApercuDTO();
+        dto.setId(chasse.getId());
         dto.setTitre(chasse.getTitre());
         dto.setDescription(chasse.getDescription());
         dto.setMonde(chasse.getTypeMonde().name());
@@ -38,8 +44,12 @@ public class ChasseApercuDTO {
         dto.setDateFin(chasse.getDateFin());
         dto.setNombreEtapes(chasse.getEtapes() != null ? chasse.getEtapes().size() : 0);
         dto.setNombreParticipants(chasse.getParticipations() != null ? chasse.getParticipations().size() : 0);
+        dto.setEtapes(new ArrayList<>());
+
+        if(chasse.getEtapes() != null)
+            for (Etape e : chasse.getEtapes()) dto.getEtapes().add(EtapeApercuDTO.fromEntity(e));
+
         return dto;
     }
 
-    // Getters & setters...
 }
