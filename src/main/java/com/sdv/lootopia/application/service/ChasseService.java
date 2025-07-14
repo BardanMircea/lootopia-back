@@ -22,7 +22,7 @@ public class ChasseService {
 
 
     @Transactional
-    public Chasse createChasse(NouvelleChasseDTO dto, Utilisateur organisateur) {
+    public ChasseApercuDTO createChasse(NouvelleChasseDTO dto, Utilisateur organisateur) {
         Chasse.TypeMonde typeMonde = Chasse.TypeMonde.valueOf(dto.getTypeMonde().toUpperCase());
         Recompense.TypeRecompense typeRecompense = Recompense.TypeRecompense.valueOf(dto.getTypeRecompense().toUpperCase());
         Chasse.Visibilite visibilite = Chasse.Visibilite.valueOf(dto.getVisibilite().toUpperCase());
@@ -37,7 +37,7 @@ public class ChasseService {
         chasse.setFraisParticipation(dto.getFraisParticipation());
         chasse.setVisibilite(visibilite);
 
-        chasseRepository.save(chasse);
+        Chasse chasseSauvegardee = chasseRepository.save(chasse);
 
         Recompense recompense = new Recompense();
         recompense.setChasse(chasse);
@@ -47,7 +47,7 @@ public class ChasseService {
 
         recompenseRepository.save(recompense);
 
-        return chasse;
+        return ChasseApercuDTO.fromEntity(chasseSauvegardee);
     }
 
     public List<ChasseApercuDTO> getChassesCreatedByUtilisateur(Long utilisateurId) {

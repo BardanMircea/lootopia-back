@@ -42,8 +42,8 @@ public class ChasseController {
             return ResponseEntity.badRequest().body("Seules les chasses cartographiques sont autorisées pour l'instant'.");
         }
 
-        Chasse created = chasseService.createChasse(dto, utilisateur);
-        return ResponseEntity.ok("Chasse créée avec succès. ID: " + created.getId());
+        ChasseApercuDTO created = chasseService.createChasse(dto, utilisateur);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping("/mes-chasses")
