@@ -19,18 +19,12 @@ public class Etape {
 
     private Integer ordre;
     private String consigne;
-
-    @Enumerated(EnumType.STRING)
-    private ClefValidation clefValidation;
+    private Double latitudeCache;
+    private Double longitudeCache;
+    private String passphrase;
 
     @ManyToOne
     @JoinColumn(name = "chasse_id")
     private Chasse chasse;
 
-    @OneToMany(mappedBy = "etape")
-    private List<Progression> progressions;
-
-    public enum ClefValidation {
-        CACHE, PASSPHRASE, REPERE_RA
-    }
 }

@@ -18,7 +18,7 @@ public class RepereRa {
     private String nom;
     private String imageMarker;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "etape_id")
     private Etape etape;
 }
