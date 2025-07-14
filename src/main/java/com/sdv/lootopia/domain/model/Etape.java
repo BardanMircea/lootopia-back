@@ -19,10 +19,9 @@ public class Etape {
 
     private Integer ordre;
     private String consigne;
-    private String clefValidation;
 
     @Enumerated(EnumType.STRING)
-    private TypeValidation typeValidation;
+    private ClefValidation clefValidation;
 
     @ManyToOne
     @JoinColumn(name = "chasse_id")
@@ -31,7 +30,7 @@ public class Etape {
     @OneToMany(mappedBy = "etape")
     private List<Progression> progressions;
 
-    public enum TypeValidation {
-        QR, GEOLOCALISATION, CODE
+    public enum ClefValidation {
+        CACHE, PASSPHRASE, REPERE_RA
     }
 }

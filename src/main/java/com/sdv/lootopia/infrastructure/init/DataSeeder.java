@@ -80,8 +80,8 @@ public class DataSeeder {
             Participation p2 = new Participation(null, vlad, chasse2, null, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
             participationRepo.saveAll(List.of(p1, p2));
 
-            Etape e1 = new Etape(null, 1, "etape 1", "indice 1", Etape.TypeValidation.CODE, chasse1,null);
-            Etape e2 = new Etape(null, 2, "etape 2", "indice 2", Etape.TypeValidation.QR, chasse1,null);
+            Etape e1 = new Etape(null, 1, "etape 1", Etape.ClefValidation.CACHE, chasse1,null);
+            Etape e2 = new Etape(null, 2, "etape 2", Etape.ClefValidation.PASSPHRASE, chasse1,null);
             etapeRepo.saveAll(List.of(e1, e2));
 
             Progression pr1 = new Progression(null, p1, e1, LocalDateTime.now().minusHours(3), Progression.Statut.VALIDE);
