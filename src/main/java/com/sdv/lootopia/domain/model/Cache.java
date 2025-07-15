@@ -14,7 +14,6 @@ public class Cache {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String description;
     private Double latitude;
     private Double longitude;
     private Double montantRecompense;
