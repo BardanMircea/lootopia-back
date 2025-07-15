@@ -17,6 +17,10 @@ public class Participation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean eligibleCreusage;
+
+    private Integer etapeCourante;
+
     @ManyToOne
     @JoinColumn(name = "joueur_id")
     private Utilisateur utilisateur;

@@ -11,4 +11,5 @@ public class CreusageRequestDTO {
     private Long chasseId;
     private Double latitude;
     private Double longitude;
+    private Double coutEnCouronnes;
 }

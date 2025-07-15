@@ -20,12 +20,16 @@ public class CreusageController {
     private final CreusageService creusageService;
 
     @PostMapping
-    public ResponseEntity<CreusageResponseDTO> creuser(
+    public ResponseEntity<Object> creuser(
             @RequestBody CreusageRequestDTO dto,
             @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur) {
 
-        CreusageResponseDTO result = creusageService.tenterCreusage(dto, utilisateur);
-        return ResponseEntity.ok(result);
+        try {
+            CreusageResponseDTO result = creusageService.creuser(dto, utilisateur);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping

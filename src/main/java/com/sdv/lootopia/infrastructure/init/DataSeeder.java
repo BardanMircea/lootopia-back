@@ -63,7 +63,7 @@ public class DataSeeder {
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
-            Cache r1 = new Cache(null,5.5, 43.12, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
+            Cache r1 = new Cache(null,45.123456, 4.567890, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
             Cache r2 = new Cache(null, 48.312, 23.123, 500.0, "Bravo", chasse2, Cache.TypeRecompense.COURONNES);
             cacheRepo.saveAll(List.of(r1, r2));
 
@@ -71,8 +71,8 @@ public class DataSeeder {
             TransactionCouronnes t2 = new TransactionCouronnes(null, vlad, -10.0, TransactionCouronnes.TypeOperation.DEBIT, "CREUSAGE", LocalDateTime.now());
             transactionRepo.saveAll(List.of(t1, t2));
 
-            Participation p1 = new Participation(null, mircea, chasse1, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
-            Participation p2 = new Participation(null, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
+            Participation p1 = new Participation(null, false, 1, mircea, chasse1, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
+            Participation p2 = new Participation(null, true, -1, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
             participationRepo.saveAll(List.of(p1, p2));
 
             Etape e1 = new Etape(null, 1, "etape 1", null, null, "passphrase1", chasse1);

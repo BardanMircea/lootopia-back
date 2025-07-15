@@ -65,6 +65,14 @@ public class ParticipationService {
         participation.setUtilisateur(utilisateur);
         participation.setChasse(chasse);
         participation.setDateInscription(LocalDateTime.now());
+        if (chasse.getEtapes() != null && !chasse.getEtapes().isEmpty()) {
+            participation.setEtapeCourante(1);
+            participation.setEligibleCreusage(false);
+        }
+        else {
+            participation.setEtapeCourante(-1);
+            participation.setEligibleCreusage(true);
+        }
 
         return ParticipationResponseDTO.fromEntity(participationRepository.save(participation));
     }

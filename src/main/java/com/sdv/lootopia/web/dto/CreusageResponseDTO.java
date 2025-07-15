@@ -11,4 +11,5 @@ public class CreusageResponseDTO {
     private boolean success;
     private String message;
     private Double gainCouronnes;
+    private Double nouvelleSoldeJoueur;
 }

@@ -1,10 +1,7 @@
 package com.sdv.lootopia.application.service;
 
 import com.sdv.lootopia.domain.model.*;
-import com.sdv.lootopia.domain.ports.ChasseRepository;
-import com.sdv.lootopia.domain.ports.CreusageRepository;
-import com.sdv.lootopia.domain.ports.ParticipationRepository;
-import com.sdv.lootopia.domain.ports.TransactionCouronnesRepository;
+import com.sdv.lootopia.domain.ports.*;
 import com.sdv.lootopia.domain.util.DistanceUtil;
 import com.sdv.lootopia.web.dto.CreusageRequestDTO;
 import com.sdv.lootopia.web.dto.CreusageResponseDTO;
@@ -23,11 +20,12 @@ public class CreusageService {
     private final ChasseRepository chasseRepository;
     private final ParticipationRepository participationRepository;
     private final TransactionCouronnesRepository transactionCouronnesRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
     private static final double DISTANCE_MAX_METRES = 20;
 
     @Transactional
-    public CreusageResponseDTO tenterCreusage(CreusageRequestDTO dto, Utilisateur joueur) {
+    public CreusageResponseDTO creuser(CreusageRequestDTO dto, Utilisateur joueur) {
         Chasse chasse = chasseRepository.findById(dto.getChasseId())
                 .orElseThrow(() -> new IllegalArgumentException("Chasse introuvable"));
 
@@ -35,13 +33,25 @@ public class CreusageService {
                 .orElseThrow(() -> new IllegalStateException("Non inscrit à cette chasse"));
 
         if (participation.getStatut() == Participation.Statut.TERMINE) {
-            return new CreusageResponseDTO(false, "Vous avez déjà terminé cette chasse.", 0.0);
+            throw new IllegalStateException("Vous avez déjà terminé cette chasse.");
         }
+
+        if(!participation.getEligibleCreusage())
+            throw new IllegalStateException("Vous n'étes pas eligible de creuser (vous avez encore des étapes à franchir).");
 
         double distance = DistanceUtil.calculateDistance(
                 dto.getLatitude(), dto.getLongitude(),
                 chasse.getCache().getLatitude(), chasse.getCache().getLongitude()
         );
+
+        // met à jour la solde du joueur si le creusage a couté des couronnes
+        Double nouvelleSoldeJoueur = joueur.getSoldeCouronnes() - dto.getCoutEnCouronnes();
+        joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
+
+        Creusage creusage = new Creusage();
+        creusage.setDate(LocalDateTime.now());
+        creusage.setParticipation(participation);
+        creusage.setCoutEnCouronnes(dto.getCoutEnCouronnes());
 
         if (distance <= DISTANCE_MAX_METRES) {
             TransactionCouronnes tx = new TransactionCouronnes();
@@ -52,14 +62,24 @@ public class CreusageService {
             tx.setDateMouvement(LocalDateTime.now());
             transactionCouronnesRepository.save(tx);
 
-            // Statut participation
             participation.setStatut(Participation.Statut.TERMINE);
             participationRepository.save(participation);
 
-            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense());
-        }
+            creusage.setReussi(true);
+            creusageRepository.save(creusage);
 
-        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0);
+            // met à jour la solde du joueur si le creusage est réussi et qu'il a gaigné
+            nouvelleSoldeJoueur += chasse.getCache().getMontantRecompense();
+            joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
+            utilisateurRepository.save(joueur);
+
+            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur);
+        }
+        creusage.setReussi(false);
+        creusage.setDistanceErreurM(distance);
+        creusageRepository.save(creusage);
+        utilisateurRepository.save(joueur);
+        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur);
     }
 
     public List<Creusage> getAll() { return creusageRepository.findAll(); }
