@@ -7,14 +7,13 @@ Ce dépôt contient l'implémentation serveur construite pour un **MVP fonctionn
 
 ## 📦 Technologies utilisées
 
-- Java 17
+- Java 21
 - Spring Boot 3
 - Spring Security (JWT)
 - Spring Data JPA (avec MySQL)
 - Architecture hexagonale (ports & adapters)
 - Jakarta Validation
 - Lombok
-- Docker (local dev)
 
 ---
 
