@@ -1,5 +1,7 @@
 package com.sdv.lootopia.infrastructure.repository;
+import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.domain.model.Participation;
+import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,11 @@ public class ParticipationRepositoryAdapter implements ParticipationRepository {
     @Override
     public List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId, Participation.Statut statut) {
         return jpa.findByUtilisateurIdAndStatut(utilisateurId, statut);
+    }
+
+    @Override
+    public Optional<Participation> findByChasseAndUtilisateur(Chasse chasse, Utilisateur joueur) {
+        return jpa.findByChasseAndUtilisateur(chasse, joueur);
     }
 }
 

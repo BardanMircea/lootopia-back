@@ -19,8 +19,6 @@ public class Chasse {
 
     private String titre;
     private String description;
-    private Double latitudeCache;
-    private Double longitudeCache;
     private Integer maxParticipants;
 
     @ManyToOne
@@ -36,11 +34,14 @@ public class Chasse {
     @OneToMany(mappedBy = "chasse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Etape> etapes;
 
+    @OneToOne
+    private Cache cache;
 
     @Enumerated(EnumType.STRING)
     private Visibilite visibilite = Visibilite.PUBLIC;
 
     private Double fraisParticipation = 0.0;
+    private LocalDateTime dateCreation;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
 

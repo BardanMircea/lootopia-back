@@ -9,15 +9,18 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Recompense {
+public class Cache {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
-    private Double valeurCouronnes = 0.0;
+    private Double latitude;
+    private Double longitude;
+    private Double montantRecompense;
+    private String messageCacheTrouve;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "chasse_id")
     private Chasse chasse;
 

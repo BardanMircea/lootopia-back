@@ -17,10 +17,9 @@ public class DataSeeder {
     CommandLineRunner seedDatabase(
             JpaUtilisateurRepository utilisateurRepo,
             JpaChasseRepository chasseRepo,
-            JpaRecompenseRepository recompenseRepo,
+            JpaCacheRepository cacheRepo,
             JpaTransactionRepository transactionRepo,
             JpaEtapeRepository etapeRepo,
-            JpaRepereRaRepository repereRaRepo,
             JpaCreusageRepository creusageRepo,
             JpaParticipationRepository participationRepo,
             JpaProgressionRepository progressionRepo
@@ -55,22 +54,18 @@ public class DataSeeder {
 
             chasse1.setDescription("Trouve le coffre caché");
             chasse1.setTitre("Chasse au trésor 1");
-            chasse1.setLatitudeCache(10.0);
-            chasse1.setLongitudeCache(45.76);
             chasse1.setOrganisateur(mircea);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
 
             chasse2.setDescription("Chasse des ruines");
             chasse2.setTitre("Mystère archéologique");
-            chasse2.setLatitudeCache(5.0);
-            chasse2.setLongitudeCache(43.61);
             chasse2.setOrganisateur(vlad);
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
-            Recompense r1 = new Recompense(null, "Coffre en or", 200.0, chasse1, Recompense.TypeRecompense.COURONNES);
-            Recompense r2 = new Recompense(null, "Potion magique", 50.0, chasse2, Recompense.TypeRecompense.COURONNES);
-            recompenseRepo.saveAll(List.of(r1, r2));
+            Cache r1 = new Cache(null, "Coffre en or",5.5, 43.12, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
+            Cache r2 = new Cache(null, "Potion magique", 48.312, 23.123, 500.0, "Bravo", chasse2, Cache.TypeRecompense.COURONNES);
+            cacheRepo.saveAll(List.of(r1, r2));
 
             TransactionCouronnes t1 = new TransactionCouronnes(null, mircea, 20.0, TransactionCouronnes.TypeOperation.CREDIT, "gain chasse", LocalDateTime.now());
             TransactionCouronnes t2 = new TransactionCouronnes(null, vlad, -10.0, TransactionCouronnes.TypeOperation.DEBIT, "CREUSAGE", LocalDateTime.now());

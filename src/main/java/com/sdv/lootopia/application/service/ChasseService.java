@@ -1,10 +1,10 @@
 package com.sdv.lootopia.application.service;
 
 import com.sdv.lootopia.domain.model.Chasse;
-import com.sdv.lootopia.domain.model.Recompense;
+import com.sdv.lootopia.domain.model.Cache;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
-import com.sdv.lootopia.domain.ports.RecompenseRepository;
+import com.sdv.lootopia.domain.ports.CacheRepository;
 import com.sdv.lootopia.web.dto.ChasseResponseDTO;
 import com.sdv.lootopia.web.dto.ChasseRequestDTO;
 import jakarta.transaction.Transactional;
@@ -18,20 +18,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ChasseService {
     private final ChasseRepository chasseRepository;
-    private final RecompenseRepository recompenseRepository;
+    private final CacheRepository cacheRepository;
 
 
     @Transactional
     public ChasseResponseDTO createChasse(ChasseRequestDTO dto, Utilisateur organisateur) {
         Chasse.TypeMonde typeMonde = Chasse.TypeMonde.valueOf(dto.getTypeMonde().toUpperCase());
-        Recompense.TypeRecompense typeRecompense = Recompense.TypeRecompense.valueOf(dto.getTypeRecompense().toUpperCase());
+        Cache.TypeRecompense typeRecompense = Cache.TypeRecompense.valueOf(dto.getTypeRecompense().toUpperCase());
         Chasse.Visibilite visibilite = Chasse.Visibilite.valueOf(dto.getVisibilite().toUpperCase());
 
         Chasse chasse = new Chasse();
         chasse.setTitre(dto.getTitre());
         chasse.setDescription(dto.getDescription());
-        chasse.setLatitudeCache(dto.getLatitudeCache());
-        chasse.setLongitudeCache(dto.getLongitudeCache());
         chasse.setTypeMonde(typeMonde);
         chasse.setOrganisateur(organisateur);
         chasse.setFraisParticipation(dto.getFraisParticipation());
@@ -39,13 +37,16 @@ public class ChasseService {
 
         Chasse chasseSauvegardee = chasseRepository.save(chasse);
 
-        Recompense recompense = new Recompense();
-        recompense.setChasse(chasse);
-        recompense.setTypeRecompense(typeRecompense);
-        recompense.setValeurCouronnes(dto.getMontantRecompense());
-        recompense.setDescription("Récompense pour avoir trouvé la cache");
+        Cache cache = new Cache();
+        cache.setChasse(chasse);
+        cache.setLatitude(dto.getLatitudeCache());
+        cache.setLongitude(dto.getLongitudeCache());
+        cache.setMessageCacheTrouve(dto.getMessageCacheTrouve());
+        cache.setTypeRecompense(typeRecompense);
+        cache.setMontantRecompense(dto.getMontantRecompense());
+        cache.setDescription("Récompense pour avoir trouvé la cache");
 
-        recompenseRepository.save(recompense);
+        cacheRepository.save(cache);
 
         return ChasseResponseDTO.fromEntity(chasseSauvegardee);
     }

@@ -48,9 +48,7 @@ public class ChasseController {
 
     @GetMapping("/mes-chasses")
     public ResponseEntity<List<ChasseResponseDTO>> getChassesCreatedByUtilisateur(
-            @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
-        Utilisateur utilisateur = userPrincipal.getUtilisateur();
+            @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur) {
         List<ChasseResponseDTO> chasses = chasseService.getChassesCreatedByUtilisateur(utilisateur.getId());
 
         return ResponseEntity.ok(chasses);
@@ -65,6 +63,5 @@ public class ChasseController {
 
         return ResponseEntity.ok(chasses);
     }
-
 }
 

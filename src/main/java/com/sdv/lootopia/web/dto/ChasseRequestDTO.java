@@ -26,6 +26,8 @@ public class ChasseRequestDTO {
     @NotBlank
     private String typeMonde; // "CARTOGRAPHIQUE" ou "REEL"
 
+    private String messageCacheTrouve;
+
     private Double fraisParticipation = 0.0;
 
     private String typeRecompense = "COURONNES"; //  pour MVP uniquement COURONNES
