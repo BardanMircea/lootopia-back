@@ -56,11 +56,13 @@ public class DataSeeder {
             chasse1.setTitre("Chasse au trésor 1");
             chasse1.setOrganisateur(mircea);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
+            chasse1.setStatut(Chasse.Statut.Active);
 
             chasse2.setDescription("Chasse des ruines");
             chasse2.setTitre("Mystère archéologique");
             chasse2.setOrganisateur(vlad);
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
+            chasse2.setStatut(Chasse.Statut.Active);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
             Cache r1 = new Cache(null,45.123456, 4.567890, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);

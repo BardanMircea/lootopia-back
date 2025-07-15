@@ -34,6 +34,7 @@ public class ChasseService {
         chasse.setOrganisateur(organisateur);
         chasse.setFraisParticipation(dto.getFraisParticipation());
         chasse.setVisibilite(visibilite);
+        chasse.setStatut(Chasse.Statut.Active);
 
         Cache cache = new Cache();
         cache.setLatitude(dto.getLatitudeCache());

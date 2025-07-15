@@ -44,6 +44,7 @@ public class Chasse {
     private LocalDateTime dateCreation;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
+    private Statut statut;
 
     public enum TypeMonde {
         REEL, CARTOGRAPHIQUE
@@ -51,6 +52,10 @@ public class Chasse {
 
     public enum Visibilite {
         PUBLIC, PRIVATE
+    }
+
+    public enum Statut {
+        Active, ANNULEE, TERMINEE
     }
 }
 

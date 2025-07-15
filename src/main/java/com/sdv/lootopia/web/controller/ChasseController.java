@@ -55,9 +55,10 @@ public class ChasseController {
     }
 
     @GetMapping("/public")
-    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliques() {
+    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliquesEtActives() {
         List<ChasseResponseDTO> chasses = chasseService.getAll().stream()
                 .filter(ch -> ch.getVisibilite() == Chasse.Visibilite.PUBLIC)
+                .filter(ch -> ch.getStatut() == Chasse.Statut.Active)
                 .map(ChasseResponseDTO::fromEntity)
                 .toList();
 
