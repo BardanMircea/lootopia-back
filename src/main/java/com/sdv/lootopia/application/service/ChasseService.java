@@ -35,19 +35,17 @@ public class ChasseService {
         chasse.setFraisParticipation(dto.getFraisParticipation());
         chasse.setVisibilite(visibilite);
 
-        Chasse chasseSauvegardee = chasseRepository.save(chasse);
-
         Cache cache = new Cache();
-        cache.setChasse(chasse);
         cache.setLatitude(dto.getLatitudeCache());
         cache.setLongitude(dto.getLongitudeCache());
         cache.setMessageCacheTrouve(dto.getMessageCacheTrouve());
         cache.setTypeRecompense(typeRecompense);
         cache.setMontantRecompense(dto.getMontantRecompense());
 
-        cacheRepository.save(cache);
+        cache.setChasse(chasseRepository.save(chasse));
+        chasse.setCache(cacheRepository.save(cache));
 
-        return ChasseResponseDTO.fromEntity(chasseSauvegardee);
+        return ChasseResponseDTO.fromEntity(chasseRepository.save(chasse));
     }
 
     public List<ChasseResponseDTO> getChassesCreatedByUtilisateur(Long utilisateurId) {

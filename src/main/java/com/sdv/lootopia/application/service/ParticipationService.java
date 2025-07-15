@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,6 +54,10 @@ public class ParticipationService {
                 .ifPresent(p -> {
                     throw new IllegalStateException("Utilisateur déjà inscrit à cette chasse");
                 });
+
+        // Verifier si organisateur
+        if(Objects.equals(chasse.getOrganisateur().getId(), utilisateur.getId()))
+                    throw new IllegalStateException("Utilisateur ne peut pas participer, car l'organisateur de cette chasse");
 
         // à vérifier si la chasse est toujours ouverte (dateFin > now ?)
 
