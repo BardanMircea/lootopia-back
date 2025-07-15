@@ -126,5 +126,11 @@ infrastructure.email	Envoi d’email d’activation
 web.controller	REST controllers
 web.dto	Objets de transfert pour les requêtes
 
+## 🔐 Variables sensibles et fichier `.env`
+
+Le projet utilise des **variables d’environnement** pour stocker les valeurs sensibles (comme les mots de passe DB, la clé JWT ou les identifiants email).
+
+👉 Ces valeurs sont **extraites du fichier `application.properties`** grâce à Spring Boot, mais **les vraies valeurs sont stockées dans un fichier `.env`** à la racine du projet. Ce fichier n'est pas pushé sur Git.
+
 ✍️ 
 Mircea BARDAN.
