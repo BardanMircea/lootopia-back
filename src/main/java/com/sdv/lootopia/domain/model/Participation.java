@@ -31,6 +31,6 @@ public class Participation {
     private Statut statut = Statut.ACTIF;
 
     public enum Statut {
-        EN_ATTENTE, ACTIF, TERMINE
+        EN_ATTENTE, ACTIF, ANNULE, TERMINE
     }
 }

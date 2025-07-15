@@ -2,7 +2,6 @@ package com.sdv.lootopia.web.controller;
 import com.sdv.lootopia.application.service.ParticipationService;
 import com.sdv.lootopia.domain.model.Participation;
 import com.sdv.lootopia.domain.model.Utilisateur;
-import com.sdv.lootopia.infrastructure.security.UserPrincipal;
 import com.sdv.lootopia.web.dto.ParticipationRequestDTO;
 import com.sdv.lootopia.web.dto.ParticipationResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,31 @@ import java.util.List;
 public class ParticipationController {
 
     private final ParticipationService participationService;
+
+    @PutMapping("/{id}/annuler")
+    public ResponseEntity<?> cancelParticipation(
+            @PathVariable Long id,
+            @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
+    ) {
+        boolean success = participationService.cancelParticipation(id, utilisateur.getId());
+
+        if (!success) {
+            return ResponseEntity.badRequest().body("Impossible d'annuler cette participation.");
+        }
+
+        return ResponseEntity.ok("Participation annulée avec succès.");
+    }
+
+
+    @GetMapping("/moi")
+    public ResponseEntity<List<ParticipationResponseDTO>> getMyParticipations(
+            @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
+    ) {
+        List<ParticipationResponseDTO> participations = participationService
+                .getActiveParticipationsForUtilisateur(utilisateur.getId());
+        return ResponseEntity.ok(participations);
+    }
+
 
     @PostMapping
     public ResponseEntity<ParticipationResponseDTO> participate(@RequestBody ParticipationRequestDTO dto,

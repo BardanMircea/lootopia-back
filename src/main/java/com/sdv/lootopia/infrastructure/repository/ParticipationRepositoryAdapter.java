@@ -25,5 +25,10 @@ public class ParticipationRepositoryAdapter implements ParticipationRepository {
     public List<Participation> findByChasseId(Long chasseId) {
         return jpa.findByChasseId(chasseId);
     }
+
+    @Override
+    public List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId, Participation.Statut statut) {
+        return jpa.findByUtilisateurIdAndStatut(utilisateurId, statut);
+    }
 }
 

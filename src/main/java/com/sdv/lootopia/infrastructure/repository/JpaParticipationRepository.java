@@ -10,5 +10,6 @@ public interface JpaParticipationRepository extends JpaRepository<Participation,
 
     Optional<Participation> findByUtilisateurIdAndChasseId(Long utilisateurId, Long chasseId);
     List<Participation> findByChasseId(Long chasseId);
+    List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId, Participation.Statut statut);
 }
 

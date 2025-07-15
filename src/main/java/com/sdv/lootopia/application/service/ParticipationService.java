@@ -21,6 +21,27 @@ public class ParticipationService {
     private final ParticipationRepository participationRepository;
     private final ChasseRepository chasseRepository;
 
+
+    @Transactional
+    public boolean cancelParticipation(Long participationId, Long utilisateurId) {
+        Optional<Participation> participationOpt = participationRepository.findById(participationId);
+
+        if (participationOpt.isEmpty()) return false;
+
+        Participation participation = participationOpt.get();
+
+        if (!participation.getUtilisateur().getId().equals(utilisateurId)) return false;
+
+        if (participation.getStatut() != Participation.Statut.ACTIF &&
+                participation.getStatut() != Participation.Statut.EN_ATTENTE)
+            return false;
+
+        participation.setStatut(Participation.Statut.ANNULE);
+        participationRepository.save(participation);
+
+        return true;
+    }
+
     @Transactional
     public ParticipationResponseDTO participateToChasse(Utilisateur utilisateur, ParticipationRequestDTO dto) {
         // Vérifier si la chasse existe
@@ -42,6 +63,14 @@ public class ParticipationService {
 
         return ParticipationResponseDTO.fromEntity(participationRepository.save(participation));
     }
+
+    public List<ParticipationResponseDTO> getActiveParticipationsForUtilisateur(Long utilisateurId) {
+        return participationRepository.findByUtilisateurIdAndStatut(utilisateurId, Participation.Statut.ACTIF)
+                .stream()
+                .map(ParticipationResponseDTO::fromEntity)
+                .toList();
+    }
+
 
     public List<Participation> getAll() { return participationRepository.findAll(); }
     public Optional<Participation> getById(Long id) { return participationRepository.findById(id); }

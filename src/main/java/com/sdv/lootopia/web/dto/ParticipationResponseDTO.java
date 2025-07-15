@@ -20,6 +20,8 @@ public class ParticipationResponseDTO {
 
     private Long chasseId;
 
+    private String titreChasse;
+
     private List<String> participants;
 
     private LocalDateTime inscritDepuis;
@@ -33,6 +35,7 @@ public class ParticipationResponseDTO {
         ParticipationResponseDTO dto = new ParticipationResponseDTO();
         dto.setId(participation.getId());
         dto.setChasseId(participation.getChasse().getId());
+        dto.setTitreChasse(participation.getChasse().getTitre());
         if (participation.getChasse().getEtapes() != null && !participation.getChasse().getEtapes().isEmpty()) {
             dto.setEtapeCourante(1);
             dto.setEligibleCreusage(false);
