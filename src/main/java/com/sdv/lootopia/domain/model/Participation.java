@@ -21,6 +21,12 @@ public class Participation {
 
     private Integer etapeCourante;
 
+    private Boolean cacheTrouvee = Boolean.FALSE;
+
+    private LocalDateTime dateDecouverte;
+
+    private String empreinteHash;
+    
     @ManyToOne
     @JoinColumn(name = "joueur_id")
     private Utilisateur utilisateur;
