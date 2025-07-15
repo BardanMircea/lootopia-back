@@ -34,7 +34,7 @@ public class Chasse {
     @OneToMany(mappedBy = "chasse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Etape> etapes;
 
-    @OneToOne
+    @OneToOne(mappedBy = "chasse")
     private Cache cache;
 
     @Enumerated(EnumType.STRING)
