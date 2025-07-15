@@ -40,7 +40,7 @@ public class Chasse {
     @Enumerated(EnumType.STRING)
     private Visibilite visibilite = Visibilite.PUBLIC;
 
-    private Double fraisParticipation = 0.0;
+    private Double fraisParticipation;
     private LocalDateTime dateCreation;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
