@@ -3,6 +3,7 @@ package com.sdv.lootopia.application.service;
 import com.sdv.lootopia.domain.model.*;
 import com.sdv.lootopia.domain.ports.*;
 import com.sdv.lootopia.domain.util.DistanceUtil;
+import com.sdv.lootopia.domain.util.HashingUtil;
 import com.sdv.lootopia.web.dto.CreusageRequestDTO;
 import com.sdv.lootopia.web.dto.CreusageResponseDTO;
 import jakarta.transaction.Transactional;
@@ -62,6 +63,7 @@ public class CreusageService {
         creusage.setDate(LocalDateTime.now());
         creusage.setParticipation(participation);
         creusage.setCoutEnCouronnes(dto.getCoutEnCouronnes());
+        creusage.setDistanceErreurM(distance);
 
         if (distance <= DISTANCE_MAX_METRES) {
             TransactionCouronnes tx1 = new TransactionCouronnes();
@@ -73,6 +75,13 @@ public class CreusageService {
             transactionCouronnesRepository.save(tx1);
 
             participation.setStatut(Participation.Statut.TERMINE);
+            participation.setCacheTrouvee(true);
+            participation.setDateDecouverte(LocalDateTime.now());
+            participation.setEmpreinteHash(HashingUtil.sha256(
+                    joueur.getId() + "-" +
+                            chasse.getId() + "-" +
+                            participation.getDateDecouverte()
+            ));
             participationRepository.save(participation);
 
             creusage.setReussi(true);
@@ -83,13 +92,13 @@ public class CreusageService {
             joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
             utilisateurRepository.save(joueur);
 
-            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur);
+            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur,creusage.getDistanceErreurM());
         }
         creusage.setReussi(false);
         creusage.setDistanceErreurM(distance);
         creusageRepository.save(creusage);
         utilisateurRepository.save(joueur);
-        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur);
+        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur, creusage.getDistanceErreurM());
     }
 
     public List<Creusage> getAll() { return creusageRepository.findAll(); }

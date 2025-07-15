@@ -73,8 +73,8 @@ public class DataSeeder {
             TransactionCouronnes t2 = new TransactionCouronnes(null, vlad, -10.0, TransactionCouronnes.TypeOperation.DEBIT, "CREUSAGE", LocalDateTime.now());
             transactionRepo.saveAll(List.of(t1, t2));
 
-            Participation p1 = new Participation(null, false, 1, mircea, chasse1, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
-            Participation p2 = new Participation(null, true, -1, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
+            Participation p1 = new Participation(null, false, 1, false, null,null, mircea, chasse1, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
+            Participation p2 = new Participation(null, true, -1, false, null, null, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
             participationRepo.saveAll(List.of(p1, p2));
 
             Etape e1 = new Etape(null, 1, "etape 1", null, null, "passphrase1", chasse1);
