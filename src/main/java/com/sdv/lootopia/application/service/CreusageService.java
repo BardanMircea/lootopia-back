@@ -48,19 +48,28 @@ public class CreusageService {
         Double nouvelleSoldeJoueur = joueur.getSoldeCouronnes() - dto.getCoutEnCouronnes();
         joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
 
+
+        // et log la transaction
+        TransactionCouronnes tx = new TransactionCouronnes();
+        tx.setUtilisateur(joueur);
+        tx.setMontant(dto.getCoutEnCouronnes());
+        tx.setTypeOperation(TransactionCouronnes.TypeOperation.DEBIT);
+        tx.setCommentaire("Montant payé pour creuser dans " + chasse.getTitre());
+        tx.setDateMouvement(LocalDateTime.now());
+        transactionCouronnesRepository.save(tx);
+
         Creusage creusage = new Creusage();
         creusage.setDate(LocalDateTime.now());
         creusage.setParticipation(participation);
         creusage.setCoutEnCouronnes(dto.getCoutEnCouronnes());
 
         if (distance <= DISTANCE_MAX_METRES) {
-            TransactionCouronnes tx = new TransactionCouronnes();
-            tx.setUtilisateur(joueur);
-            tx.setMontant(chasse.getCache().getMontantRecompense());
-            tx.setTypeOperation(TransactionCouronnes.TypeOperation.CREDIT);
-            tx.setCommentaire("Récompense trouvée dans la chasse : " + chasse.getTitre());
-            tx.setDateMouvement(LocalDateTime.now());
-            transactionCouronnesRepository.save(tx);
+            TransactionCouronnes tx1 = new TransactionCouronnes();
+            tx1.setMontant(chasse.getCache().getMontantRecompense());
+            tx1.setTypeOperation(TransactionCouronnes.TypeOperation.CREDIT);
+            tx1.setCommentaire("Récompense trouvée dans la chasse : " + chasse.getTitre());
+            tx1.setDateMouvement(LocalDateTime.now());
+            transactionCouronnesRepository.save(tx1);
 
             participation.setStatut(Participation.Statut.TERMINE);
             participationRepository.save(participation);
