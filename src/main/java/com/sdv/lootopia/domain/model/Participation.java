@@ -25,12 +25,12 @@ public class Participation {
     @JoinColumn(name = "chasse_id")
     private Chasse chasse;
 
-    private LocalDateTime dateInscription;
+    private LocalDateTime dateInscription = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Statut statut = Statut.ACTIF;
 
     public enum Statut {
-        EN_ATTENTE, ACTIF, TERMINE
+        EN_ATTENTE, ACTIF, ANNULE, TERMINE
     }
 }

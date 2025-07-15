@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EtapeApercuDTO {
+public class EtapeReponseDTO {
 
     private Integer ordre;
     private String consigne;
@@ -17,8 +17,8 @@ public class EtapeApercuDTO {
     private String passphrase;
 
 
-    public static EtapeApercuDTO fromEntity(Etape etape) {
-        EtapeApercuDTO dto = new EtapeApercuDTO();
+    public static EtapeReponseDTO fromEntity(Etape etape) {
+        EtapeReponseDTO dto = new EtapeReponseDTO();
         dto.setOrdre(etape.getOrdre());
         dto.setConsigne(etape.getConsigne());
         dto.setPassphrase(etape.getPassphrase());

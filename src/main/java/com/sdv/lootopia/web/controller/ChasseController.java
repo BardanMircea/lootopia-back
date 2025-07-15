@@ -4,8 +4,8 @@ import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.application.service.ChasseService;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.infrastructure.security.UserPrincipal;
-import com.sdv.lootopia.web.dto.ChasseApercuDTO;
-import com.sdv.lootopia.web.dto.NouvelleChasseDTO;
+import com.sdv.lootopia.web.dto.ChasseResponseDTO;
+import com.sdv.lootopia.web.dto.ChasseRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +34,7 @@ public class ChasseController {
 
     @PostMapping
     public ResponseEntity<?> createChasse(
-            @Valid @RequestBody NouvelleChasseDTO dto,
+            @Valid @RequestBody ChasseRequestDTO dto,
             @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
     ) {
         // pour l'instant on se concentre sur les chasses carto
@@ -42,25 +42,25 @@ public class ChasseController {
             return ResponseEntity.badRequest().body("Seules les chasses cartographiques sont autorisées pour l'instant'.");
         }
 
-        ChasseApercuDTO created = chasseService.createChasse(dto, utilisateur);
+        ChasseResponseDTO created = chasseService.createChasse(dto, utilisateur);
         return ResponseEntity.ok(created);
     }
 
     @GetMapping("/mes-chasses")
-    public ResponseEntity<List<ChasseApercuDTO>> getChassesCreatedByUtilisateur(
+    public ResponseEntity<List<ChasseResponseDTO>> getChassesCreatedByUtilisateur(
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
 
         Utilisateur utilisateur = userPrincipal.getUtilisateur();
-        List<ChasseApercuDTO> chasses = chasseService.getChassesCreatedByUtilisateur(utilisateur.getId());
+        List<ChasseResponseDTO> chasses = chasseService.getChassesCreatedByUtilisateur(utilisateur.getId());
 
         return ResponseEntity.ok(chasses);
     }
 
     @GetMapping("/public")
-    public ResponseEntity<List<ChasseApercuDTO>> getChassesPubliques() {
-        List<ChasseApercuDTO> chasses = chasseService.getAll().stream()
+    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliques() {
+        List<ChasseResponseDTO> chasses = chasseService.getAll().stream()
                 .filter(ch -> ch.getVisibilite() == Chasse.Visibilite.PUBLIC)
-                .map(ChasseApercuDTO::fromEntity)
+                .map(ChasseResponseDTO::fromEntity)
                 .toList();
 
         return ResponseEntity.ok(chasses);
