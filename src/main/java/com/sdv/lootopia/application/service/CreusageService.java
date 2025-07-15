@@ -65,6 +65,7 @@ public class CreusageService {
 
         if (distance <= DISTANCE_MAX_METRES) {
             TransactionCouronnes tx1 = new TransactionCouronnes();
+            tx1.setUtilisateur(joueur);
             tx1.setMontant(chasse.getCache().getMontantRecompense());
             tx1.setTypeOperation(TransactionCouronnes.TypeOperation.CREDIT);
             tx1.setCommentaire("Récompense trouvée dans la chasse : " + chasse.getTitre());
