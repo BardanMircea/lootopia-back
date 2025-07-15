@@ -34,19 +34,27 @@ public class ParticipationController {
 
 
     @GetMapping("/moi")
-    public ResponseEntity<List<ParticipationResponseDTO>> getMyParticipations(
+    public ResponseEntity<Object> getMyParticipations(
             @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
     ) {
         List<ParticipationResponseDTO> participations = participationService
                 .getActiveParticipationsForUtilisateur(utilisateur.getId());
-        return ResponseEntity.ok(participations);
+        try {
+            return ResponseEntity.ok(participations);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
     @PostMapping
-    public ResponseEntity<ParticipationResponseDTO> participate(@RequestBody ParticipationRequestDTO dto,
+    public ResponseEntity<Object> participate(@RequestBody ParticipationRequestDTO dto,
                                                                 @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur) {
-        return ResponseEntity.ok(participationService.participateToChasse(utilisateur, dto));
+        try {
+            return ResponseEntity.ok(participationService.participateToChasse(utilisateur, dto));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping

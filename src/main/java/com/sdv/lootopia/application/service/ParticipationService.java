@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -54,12 +55,24 @@ public class ParticipationService {
                     throw new IllegalStateException("Utilisateur déjà inscrit à cette chasse");
                 });
 
+        // Verifier si organisateur
+        if(Objects.equals(chasse.getOrganisateur().getId(), utilisateur.getId()))
+                    throw new IllegalStateException("Utilisateur ne peut pas participer, car l'organisateur de cette chasse");
+
         // à vérifier si la chasse est toujours ouverte (dateFin > now ?)
 
         Participation participation = new Participation();
         participation.setUtilisateur(utilisateur);
         participation.setChasse(chasse);
         participation.setDateInscription(LocalDateTime.now());
+        if (chasse.getEtapes() != null && !chasse.getEtapes().isEmpty()) {
+            participation.setEtapeCourante(1);
+            participation.setEligibleCreusage(false);
+        }
+        else {
+            participation.setEtapeCourante(-1);
+            participation.setEligibleCreusage(true);
+        }
 
         return ParticipationResponseDTO.fromEntity(participationRepository.save(participation));
     }

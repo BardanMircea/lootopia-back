@@ -24,7 +24,7 @@ public class Utilisateur {
 
     private String activationToken;
     private LocalDateTime activationTokenExpiration;
-    private boolean compteActif = false;
+    private boolean compteActif = Boolean.FALSE;
     private boolean rgpdConsent;
 
     @OneToMany(mappedBy = "utilisateur")

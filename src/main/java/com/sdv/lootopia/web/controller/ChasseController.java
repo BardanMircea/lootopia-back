@@ -48,23 +48,21 @@ public class ChasseController {
 
     @GetMapping("/mes-chasses")
     public ResponseEntity<List<ChasseResponseDTO>> getChassesCreatedByUtilisateur(
-            @AuthenticationPrincipal UserPrincipal userPrincipal) {
-
-        Utilisateur utilisateur = userPrincipal.getUtilisateur();
+            @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur) {
         List<ChasseResponseDTO> chasses = chasseService.getChassesCreatedByUtilisateur(utilisateur.getId());
 
         return ResponseEntity.ok(chasses);
     }
 
     @GetMapping("/public")
-    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliques() {
+    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliquesEtActives() {
         List<ChasseResponseDTO> chasses = chasseService.getAll().stream()
                 .filter(ch -> ch.getVisibilite() == Chasse.Visibilite.PUBLIC)
+                .filter(ch -> ch.getStatut() == Chasse.Statut.Active)
                 .map(ChasseResponseDTO::fromEntity)
                 .toList();
 
         return ResponseEntity.ok(chasses);
     }
-
 }
 
