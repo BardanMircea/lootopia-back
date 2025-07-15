@@ -44,7 +44,7 @@ public class ChasseService {
         cache.setMessageCacheTrouve(dto.getMessageCacheTrouve());
         cache.setTypeRecompense(typeRecompense);
         cache.setMontantRecompense(dto.getMontantRecompense());
-        cache.setDescription("Récompense pour avoir trouvé la cache");
+        cache.setDescription(dto.getDescription());
 
         cacheRepository.save(cache);
 
