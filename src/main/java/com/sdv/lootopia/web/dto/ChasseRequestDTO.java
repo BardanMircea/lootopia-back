@@ -28,7 +28,7 @@ public class ChasseRequestDTO {
 
     private String messageCacheTrouve;
 
-    private Double fraisParticipation = 0.0;
+    private Double fraisParticipation;
 
     private String typeRecompense = "COURONNES"; //  pour MVP uniquement COURONNES
 

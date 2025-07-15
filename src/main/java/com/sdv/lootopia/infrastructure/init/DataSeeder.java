@@ -63,8 +63,8 @@ public class DataSeeder {
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
-            Cache r1 = new Cache(null, "Coffre en or",5.5, 43.12, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
-            Cache r2 = new Cache(null, "Potion magique", 48.312, 23.123, 500.0, "Bravo", chasse2, Cache.TypeRecompense.COURONNES);
+            Cache r1 = new Cache(null,5.5, 43.12, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
+            Cache r2 = new Cache(null, 48.312, 23.123, 500.0, "Bravo", chasse2, Cache.TypeRecompense.COURONNES);
             cacheRepo.saveAll(List.of(r1, r2));
 
             TransactionCouronnes t1 = new TransactionCouronnes(null, mircea, 20.0, TransactionCouronnes.TypeOperation.CREDIT, "gain chasse", LocalDateTime.now());
