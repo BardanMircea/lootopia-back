@@ -17,10 +17,9 @@ public class DataSeeder {
     CommandLineRunner seedDatabase(
             JpaUtilisateurRepository utilisateurRepo,
             JpaChasseRepository chasseRepo,
-            JpaRecompenseRepository recompenseRepo,
+            JpaCacheRepository cacheRepo,
             JpaTransactionRepository transactionRepo,
             JpaEtapeRepository etapeRepo,
-            JpaRepereRaRepository repereRaRepo,
             JpaCreusageRepository creusageRepo,
             JpaParticipationRepository participationRepo,
             JpaProgressionRepository progressionRepo
@@ -55,42 +54,36 @@ public class DataSeeder {
 
             chasse1.setDescription("Trouve le coffre caché");
             chasse1.setTitre("Chasse au trésor 1");
-            chasse1.setLatitudeCache(10.0);
-            chasse1.setLongitudeCache(45.76);
             chasse1.setOrganisateur(mircea);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
+            chasse1.setStatut(Chasse.Statut.Active);
 
             chasse2.setDescription("Chasse des ruines");
             chasse2.setTitre("Mystère archéologique");
-            chasse2.setLatitudeCache(5.0);
-            chasse2.setLongitudeCache(43.61);
             chasse2.setOrganisateur(vlad);
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
+            chasse2.setStatut(Chasse.Statut.Active);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
-            Recompense r1 = new Recompense(null, "Coffre en or", 200.0, chasse1, Recompense.TypeRecompense.COURONNES);
-            Recompense r2 = new Recompense(null, "Potion magique", 50.0, chasse2, Recompense.TypeRecompense.COURONNES);
-            recompenseRepo.saveAll(List.of(r1, r2));
+            Cache r1 = new Cache(null,45.123456, 4.567890, 200.0, "Felicitations", chasse1, Cache.TypeRecompense.COURONNES);
+            Cache r2 = new Cache(null, 48.312, 23.123, 500.0, "Bravo", chasse2, Cache.TypeRecompense.COURONNES);
+            cacheRepo.saveAll(List.of(r1, r2));
 
             TransactionCouronnes t1 = new TransactionCouronnes(null, mircea, 20.0, TransactionCouronnes.TypeOperation.CREDIT, "gain chasse", LocalDateTime.now());
             TransactionCouronnes t2 = new TransactionCouronnes(null, vlad, -10.0, TransactionCouronnes.TypeOperation.DEBIT, "CREUSAGE", LocalDateTime.now());
             transactionRepo.saveAll(List.of(t1, t2));
 
-            Participation p1 = new Participation(null, mircea, chasse1, null, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
-            Participation p2 = new Participation(null, vlad, chasse2, null, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
+            Participation p1 = new Participation(null, false, 1, false, null,null, mircea, chasse1, LocalDateTime.now().minusDays(1), Participation.Statut.ACTIF);
+            Participation p2 = new Participation(null, true, -1, false, null, null, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
             participationRepo.saveAll(List.of(p1, p2));
 
-            Etape e1 = new Etape(null, 1, "etape 1", "indice 1", Etape.TypeValidation.CODE, chasse1,null);
-            Etape e2 = new Etape(null, 2, "etape 2", "indice 2", Etape.TypeValidation.QR, chasse1,null);
+            Etape e1 = new Etape(null, 1, "etape 1", null, null, "passphrase1", chasse1);
+            Etape e2 = new Etape(null, 2, "etape 2", null, null, "passphrase2", chasse1);
             etapeRepo.saveAll(List.of(e1, e2));
 
-            Progression pr1 = new Progression(null, p1, e1, LocalDateTime.now().minusHours(3), Progression.Statut.VALIDE);
-            Progression pr2 = new Progression(null, p1, e2, null, Progression.Statut.EN_COURS);
+            Progression pr1 = new Progression(null, true, p1, e1, LocalDateTime.now().minusHours(3));
+            Progression pr2 = new Progression(null, false, p1, e2, null);
             progressionRepo.saveAll(List.of(pr1, pr2));
-
-            RepereRa ra1 = new RepereRa(null, "repère1", "image1.png", e1);
-            RepereRa ra2 = new RepereRa(null, "repère2","image2.png", e2);
-            repereRaRepo.saveAll(List.of(ra1, ra2));
 
             Creusage c1 = new Creusage(null, p2, LocalDateTime.now().minusHours(2), false, 0.0, 250.5);
             Creusage c2 = new Creusage(null, p2, LocalDateTime.now().minusHours(1), true, 5.0, 0.2);

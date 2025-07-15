@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +17,16 @@ public class Participation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean eligibleCreusage;
+
+    private Integer etapeCourante;
+
+    private Boolean cacheTrouvee = Boolean.FALSE;
+
+    private LocalDateTime dateDecouverte;
+
+    private String empreinteHash;
+    
     @ManyToOne
     @JoinColumn(name = "joueur_id")
     private Utilisateur utilisateur;
@@ -26,15 +35,12 @@ public class Participation {
     @JoinColumn(name = "chasse_id")
     private Chasse chasse;
 
-    @OneToMany(mappedBy = "participation")
-    private List<Progression> progressions;
-
-    private LocalDateTime dateInscription;
+    private LocalDateTime dateInscription = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Statut statut = Statut.ACTIF;
 
     public enum Statut {
-        EN_ATTENTE, ACTIF, TERMINE
+        EN_ATTENTE, ACTIF, ANNULE, TERMINE
     }
 }

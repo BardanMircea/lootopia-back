@@ -17,6 +17,8 @@ public class Progression {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean isValide = Boolean.FALSE;
+
     @ManyToOne
     @JoinColumn(name = "participation_id")
     private Participation participation;
@@ -27,10 +29,4 @@ public class Progression {
 
     private LocalDateTime dateValidation;
 
-    @Enumerated(EnumType.STRING)
-    private Statut statut = Statut.EN_COURS;
-
-    public enum Statut {
-        EN_COURS, VALIDE
-    }
 }

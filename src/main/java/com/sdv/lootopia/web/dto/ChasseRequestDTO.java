@@ -3,9 +3,13 @@ package com.sdv.lootopia.web.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
-public class NouvelleChasseDTO {
+@Getter
+@Setter
+public class ChasseRequestDTO {
 
     @NotBlank
     private String titre;
@@ -22,7 +26,9 @@ public class NouvelleChasseDTO {
     @NotBlank
     private String typeMonde; // "CARTOGRAPHIQUE" ou "REEL"
 
-    private Double fraisParticipation = 0.0;
+    private String messageCacheTrouve;
+
+    private Double fraisParticipation;
 
     private String typeRecompense = "COURONNES"; //  pour MVP uniquement COURONNES
 
