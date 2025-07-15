@@ -63,6 +63,7 @@ public class CreusageService {
         creusage.setDate(LocalDateTime.now());
         creusage.setParticipation(participation);
         creusage.setCoutEnCouronnes(dto.getCoutEnCouronnes());
+        creusage.setDistanceErreurM(distance);
 
         if (distance <= DISTANCE_MAX_METRES) {
             TransactionCouronnes tx1 = new TransactionCouronnes();
@@ -91,13 +92,13 @@ public class CreusageService {
             joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
             utilisateurRepository.save(joueur);
 
-            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur);
+            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur,creusage.getDistanceErreurM());
         }
         creusage.setReussi(false);
         creusage.setDistanceErreurM(distance);
         creusageRepository.save(creusage);
         utilisateurRepository.save(joueur);
-        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur);
+        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur, creusage.getDistanceErreurM());
     }
 
     public List<Creusage> getAll() { return creusageRepository.findAll(); }

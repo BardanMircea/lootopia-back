@@ -12,4 +12,5 @@ public class CreusageResponseDTO {
     private String message;
     private Double gainCouronnes;
     private Double nouvelleSoldeJoueur;
+    private Double distanceErreurM;
 }
