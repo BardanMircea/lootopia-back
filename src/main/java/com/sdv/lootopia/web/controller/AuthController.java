@@ -80,7 +80,6 @@ public class AuthController {
         return ResponseEntity.ok("Compte activé avec succès !");
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         authManager.authenticate(
