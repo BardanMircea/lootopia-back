@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/participations")
@@ -26,10 +27,10 @@ public class ParticipationController {
         boolean success = participationService.cancelParticipation(id, utilisateur.getId());
 
         if (!success) {
-            return ResponseEntity.badRequest().body("Impossible d'annuler cette participation.");
+            return ResponseEntity.badRequest().body(Map.of("message","Impossible d'annuler cette participation."));
         }
 
-        return ResponseEntity.ok("Participation annulée avec succès.");
+        return ResponseEntity.ok(Map.of("message","Participation annulée avec succès."));
     }
 
 

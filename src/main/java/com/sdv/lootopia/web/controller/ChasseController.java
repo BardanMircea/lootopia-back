@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -39,7 +40,7 @@ public class ChasseController {
     ) {
         // pour l'instant on se concentre sur les chasses carto
         if (!dto.getTypeMonde().equalsIgnoreCase("CARTOGRAPHIQUE")) {
-            return ResponseEntity.badRequest().body("Seules les chasses cartographiques sont autorisées pour l'instant'.");
+            return ResponseEntity.badRequest().body(Map.of("message","Seules les chasses cartographiques sont autorisées pour l'instant'."));
         }
 
         ChasseResponseDTO created = chasseService.createChasse(dto, utilisateur);

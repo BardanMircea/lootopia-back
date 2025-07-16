@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,7 +35,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationRequest registrationRequest) {
         if (!Boolean.TRUE.equals(registrationRequest.getRgpdConsent())) {
-            return ResponseEntity.badRequest().body("Le consentement RGPD est obligatoire.");
+            return ResponseEntity.badRequest().body(Map.of("message","Le consentement RGPD est obligatoire."));
         }
 
         Utilisateur user = new Utilisateur();
@@ -51,11 +53,12 @@ public class AuthController {
         emailService.sendActivationEmail(user.getEmail(), user.getActivationToken());
 
         utilisateurRepo.save(user);
-        return ResponseEntity.ok("Lien d'activation envoyé avec succès !");
+
+        return ResponseEntity.ok(Map.of("message", "Lien d'activation envoyé avec succès !"));
     }
 
     @GetMapping("/activate")
-    public ResponseEntity<String> activate(@RequestParam String token) {
+    public ResponseEntity<?> activate(@RequestParam String token) {
         Optional<Utilisateur> utilisateurOpt = utilisateurRepo.findByActivationToken(token);
 
         if (utilisateurOpt.isEmpty()) {
@@ -65,11 +68,11 @@ public class AuthController {
         Utilisateur utilisateur = utilisateurOpt.get();
 
         if (utilisateur.isCompteActif()) {
-            return ResponseEntity.ok("Compte déjà activé !");
+            return ResponseEntity.ok(Map.of("message", "Compte déjà activé !"));
         }
 
         if (utilisateur.getActivationTokenExpiration().isBefore(LocalDateTime.now())) {
-            return ResponseEntity.badRequest().body("Lien expiré. Demandez-en un nouveau.");
+            return ResponseEntity.badRequest().body(Map.of("message","Lien expiré. Demandez-en un nouveau."));
         }
 
         utilisateur.setCompteActif(true);
@@ -77,9 +80,8 @@ public class AuthController {
         utilisateur.setActivationTokenExpiration(null);
         utilisateurRepo.save(utilisateur);
 
-        return ResponseEntity.ok("Compte activé avec succès !");
+        return ResponseEntity.ok(Map.of("message","Compte activé avec succès !"));
     }
-
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
@@ -92,8 +94,13 @@ public class AuthController {
         Utilisateur utilisateur = utilisateurRepo.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
 
+        // Ajout des claims à injecter dans le token pour le front (pseudo notamment)
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("pseudo", utilisateur.getPseudo());
+        extraClaims.put("roles", utilisateur.getRole());
+
         UserDetails userDetails = new UserPrincipal(utilisateur);
-        String token = jwtService.generateToken(userDetails);
+        String token = jwtService.generateToken(userDetails, extraClaims);
 
         return ResponseEntity.ok(new AuthResponse(token));
     }
