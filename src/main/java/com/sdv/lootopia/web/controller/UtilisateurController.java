@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/utilisateurs")
+@RequestMapping("/utilisateurs")
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;

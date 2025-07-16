@@ -4,7 +4,6 @@ import com.sdv.lootopia.application.service.EtapeService;
 import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.domain.model.Etape;
 import com.sdv.lootopia.domain.model.Utilisateur;
-import com.sdv.lootopia.infrastructure.security.UserPrincipal;
 import com.sdv.lootopia.web.dto.ChasseResponseDTO;
 import com.sdv.lootopia.web.dto.EtapeRequestDTO;
 import jakarta.validation.Valid;
