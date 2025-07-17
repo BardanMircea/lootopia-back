@@ -35,7 +35,6 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .csrf(csrf -> csrf.disable())
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/chasses/**").hasRole("USER")

@@ -56,12 +56,16 @@ public class DataSeeder {
             chasse1.setTitre("Chasse au trésor 1");
             chasse1.setOrganisateur(mircea);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
+            chasse1.setDateDebut(LocalDateTime.now().minusDays(2));
+            chasse1.setDateFin(LocalDateTime.now().plusDays(2));
             chasse1.setStatut(Chasse.Statut.Active);
 
             chasse2.setDescription("Chasse des ruines");
             chasse2.setTitre("Mystère archéologique");
             chasse2.setOrganisateur(vlad);
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
+            chasse2.setDateDebut(LocalDateTime.now().minusDays(6));
+            chasse2.setDateFin(LocalDateTime.now().plusDays(1));
             chasse2.setStatut(Chasse.Statut.Active);
             chasseRepo.saveAll(List.of(chasse1, chasse2));
 
