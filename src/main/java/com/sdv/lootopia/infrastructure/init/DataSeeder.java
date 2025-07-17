@@ -58,7 +58,7 @@ public class DataSeeder {
 
             chasse1.setDescription("Trouve le coffre caché");
             chasse1.setTitre("Chasse au trésor 1");
-            chasse1.setOrganisateur(mircea);
+            chasse1.setOrganisateur(vlad);
             chasse1.setMaxParticipants(6);
             chasse1.setFraisParticipation(25.0);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);

@@ -27,8 +27,8 @@ public class ChasseResponseDTO {
     private Integer nombreParticipants;
     private Double montantRecompense;
     private List<EtapeReponseDTO> etapes;
+    private Double fraisParticipation;
 
-    // Méthode pour mapper depuis une entité Chasse :
     public static ChasseResponseDTO fromEntity(Chasse chasse) {
         ChasseResponseDTO dto = new ChasseResponseDTO();
         dto.setId(chasse.getId());
@@ -43,6 +43,7 @@ public class ChasseResponseDTO {
         dto.setNombreParticipants(chasse.getParticipations() != null ? chasse.getParticipations().size() : 0);
         dto.setEtapes(new ArrayList<>());
         dto.setMontantRecompense(chasse.getCache().getMontantRecompense());
+        dto.setFraisParticipation(chasse.getFraisParticipation());
 
         if(chasse.getEtapes() != null)
             for (Etape e : chasse.getEtapes()) dto.getEtapes().add(EtapeReponseDTO.fromEntity(e));
