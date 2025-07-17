@@ -2,6 +2,8 @@ package com.sdv.lootopia.infrastructure.repository;
 
 import com.sdv.lootopia.domain.model.Chasse;
 import com.sdv.lootopia.domain.ports.ChasseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +30,10 @@ public class ChasseRepositoryAdapter implements ChasseRepository {
     @Override
     public List<Chasse> findByOrganisateurId(Long utilisateurId) {
         return jpa.findByOrganisateurId(utilisateurId);
+    }
+
+    @Override
+    public Page<Chasse> findByVisibiliteAndStatut(Chasse.Visibilite visibilite, Chasse.Statut statut, Pageable pageable) {
+        return jpa.findByVisibiliteAndStatut(visibilite, statut, pageable);
     }
 }

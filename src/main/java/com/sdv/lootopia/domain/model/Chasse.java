@@ -44,6 +44,8 @@ public class Chasse {
     private LocalDateTime dateCreation;
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
+
+    @Enumerated(EnumType.STRING)
     private Statut statut;
 
     public enum TypeMonde {

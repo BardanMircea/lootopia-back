@@ -9,6 +9,8 @@ import com.sdv.lootopia.web.dto.ChasseResponseDTO;
 import com.sdv.lootopia.web.dto.ChasseRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,6 +56,10 @@ public class ChasseService {
                 .stream()
                 .map(ChasseResponseDTO::fromEntity)
                 .toList();
+    }
+
+    public Page<Chasse> getChassesPubliquesEtActives(Pageable pageable) {
+        return chasseRepository.findByVisibiliteAndStatut(Chasse.Visibilite.PUBLIC, Chasse.Statut.Active, pageable);
     }
 
     public List<Chasse> getAll() {
