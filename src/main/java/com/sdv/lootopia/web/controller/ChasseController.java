@@ -7,6 +7,9 @@ import com.sdv.lootopia.infrastructure.security.UserPrincipal;
 import com.sdv.lootopia.web.dto.ChasseResponseDTO;
 import com.sdv.lootopia.web.dto.ChasseRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -56,14 +59,14 @@ public class ChasseController {
     }
 
     @GetMapping("/public")
-    public ResponseEntity<List<ChasseResponseDTO>> getChassesPubliquesEtActives() {
-        List<ChasseResponseDTO> chasses = chasseService.getAll().stream()
-                .filter(ch -> ch.getVisibilite() == Chasse.Visibilite.PUBLIC)
-                .filter(ch -> ch.getStatut() == Chasse.Statut.Active)
-                .map(ChasseResponseDTO::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(chasses);
+    public ResponseEntity<Page<ChasseResponseDTO>> getChassesPubliquesEtActives(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Chasse> pageChasses = chasseService.getChassesPubliquesEtActives(pageable);
+        Page<ChasseResponseDTO> dtoPage = pageChasses.map(ChasseResponseDTO::fromEntity);
+        return ResponseEntity.ok(dtoPage);
     }
 }
 
