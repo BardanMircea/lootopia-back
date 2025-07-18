@@ -1,7 +1,6 @@
 package com.sdv.lootopia.web.dto;
 
 import com.sdv.lootopia.domain.model.Participation;
-import com.sdv.lootopia.domain.model.Utilisateur;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +29,8 @@ public class ParticipationResponseDTO {
 
     private Boolean eligibleCreusage;
 
+    private Boolean cacheTrouvee;
+
 
     public static ParticipationResponseDTO fromEntity( Participation participation) {
         ParticipationResponseDTO dto = new ParticipationResponseDTO();
@@ -51,6 +52,7 @@ public class ParticipationResponseDTO {
         for (Participation p : participation.getChasse().getParticipations())
             dto.getParticipants().add(p.getUtilisateur().getPseudo());
 
+        dto.setCacheTrouvee(participation.getCacheTrouvee());
         return dto;
     }
 }

@@ -84,7 +84,7 @@ public class CreusageService {
         creusage.setDistanceErreurM(distance);
         creusageRepository.save(creusage);
         utilisateurRepository.save(joueur);
-        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, creusage.getDistanceErreurM(), soldeJoueur);
+        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, soldeJoueur, creusage.getDistanceErreurM());
     }
 
     public List<Creusage> getAll() { return creusageRepository.findAll(); }

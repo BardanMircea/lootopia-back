@@ -6,8 +6,12 @@ import com.sdv.lootopia.domain.ports.ParticipationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import static com.sdv.lootopia.domain.model.Participation.Statut.ACTIF;
+import static com.sdv.lootopia.domain.model.Participation.Statut.TERMINE;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,8 +33,8 @@ public class ParticipationRepositoryAdapter implements ParticipationRepository {
     }
 
     @Override
-    public List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId, Participation.Statut statut) {
-        return jpa.findByUtilisateurIdAndStatut(utilisateurId, statut);
+    public List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId) {
+        return jpa.findByUtilisateurIdAndStatutIn(utilisateurId, List.of(ACTIF, TERMINE));
     }
 
     @Override

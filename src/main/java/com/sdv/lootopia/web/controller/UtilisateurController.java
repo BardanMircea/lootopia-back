@@ -2,6 +2,7 @@ package com.sdv.lootopia.web.controller;
 
 import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.application.service.UtilisateurService;
+import com.sdv.lootopia.web.dto.UtilisateurResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class UtilisateurController {
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<Utilisateur> getByEmail(@RequestParam String email) {
-        Optional<Utilisateur> utilisateur = utilisateurService.getByEmail(email);
-        return utilisateur.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> getByEmail(@RequestParam String email) {
+        UtilisateurResponseDTO utilisateurResponseDTO = utilisateurService.getByEmail(email);
+        return ResponseEntity.ok(utilisateurResponseDTO);
     }
 }

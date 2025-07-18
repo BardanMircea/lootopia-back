@@ -43,6 +43,7 @@ public class AuthController {
         user.setRgpdConsent(true);
         user.setEmail(registrationRequest.getEmail());
         user.setPseudo(registrationRequest.getPseudo());
+        user.setSoldeCouronnes(100.0);
 
         user.setActivationToken(UUID.randomUUID().toString());
         user.setActivationTokenExpiration(LocalDateTime.now().plusHours(24));

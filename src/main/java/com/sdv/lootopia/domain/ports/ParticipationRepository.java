@@ -4,6 +4,7 @@ import com.sdv.lootopia.domain.model.Participation;
 import com.sdv.lootopia.domain.model.Utilisateur;
 import jakarta.mail.Part;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,8 @@ public interface ParticipationRepository {
     Participation save(Participation participation);
     Optional<Participation> findByUtilisateurIdAndChasseId(Long utilisateurId, Long chasseId);
     List<Participation> findByChasseId(Long chasseId);
-    List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId, Participation.Statut statut);
+    List<Participation> findByUtilisateurIdAndStatut(Long utilisateurId);
 
     Optional<Participation> findByChasseAndUtilisateur(Chasse chasse, Utilisateur joueur);
+
 }

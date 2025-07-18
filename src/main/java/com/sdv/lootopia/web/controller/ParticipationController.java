@@ -39,7 +39,7 @@ public class ParticipationController {
             @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
     ) {
         List<ParticipationResponseDTO> participations = participationService
-                .getActiveParticipationsForUtilisateur(utilisateur.getId());
+                .getActiveOrFinishedParticipationsForUtilisateur(utilisateur.getId());
         try {
             return ResponseEntity.ok(participations);
         } catch (Exception e) {

@@ -77,8 +77,8 @@ public class ParticipationService {
         return ParticipationResponseDTO.fromEntity(participationRepository.save(participation));
     }
 
-    public List<ParticipationResponseDTO> getActiveParticipationsForUtilisateur(Long utilisateurId) {
-        return participationRepository.findByUtilisateurIdAndStatut(utilisateurId, Participation.Statut.ACTIF)
+    public List<ParticipationResponseDTO> getActiveOrFinishedParticipationsForUtilisateur(Long utilisateurId) {
+        return participationRepository.findByUtilisateurIdAndStatut(utilisateurId)
                 .stream()
                 .map(ParticipationResponseDTO::fromEntity)
                 .toList();
