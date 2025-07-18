@@ -133,16 +133,16 @@ public class DataSeeder {
             Participation p2 = new Participation(null, true, -1, false, null, null, vlad, chasse2, LocalDateTime.now().minusDays(2), Participation.Statut.ACTIF);
             participationRepo.saveAll(List.of(p1, p2));
 
-            Etape e1 = new Etape(null, 1, "etape 1", null, null, "passphrase1", chasse1);
-            Etape e2 = new Etape(null, 2, "etape 2", null, null, "passphrase2", chasse1);
+            Etape e1 = new Etape(null,1, "etape 1", null, null, "passphrase1",50.0, chasse1);
+            Etape e2 = new Etape(null, 2, "etape 2", null, null, "passphrase2",150, chasse1);
             etapeRepo.saveAll(List.of(e1, e2));
 
             Progression pr1 = new Progression(null, true, p1, e1, LocalDateTime.now().minusHours(3));
             Progression pr2 = new Progression(null, false, p1, e2, null);
             progressionRepo.saveAll(List.of(pr1, pr2));
 
-            Creusage c1 = new Creusage(null, p2, LocalDateTime.now().minusHours(2), false, 0.0, 250.5);
-            Creusage c2 = new Creusage(null, p2, LocalDateTime.now().minusHours(1), true, 5.0, 0.2);
+            Creusage c1 = new Creusage(null, p2, LocalDateTime.now().minusHours(2), false, 0.0);
+            Creusage c2 = new Creusage(null, p2, LocalDateTime.now().minusHours(1), true, 5.0);
             creusageRepo.saveAll(List.of(c1, c2));
 
         };

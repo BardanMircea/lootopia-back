@@ -20,6 +20,7 @@ public class Etape {
     private Double latitudeCache;
     private Double longitudeCache;
     private String passphrase;
+    private double prixValidationDirecte;
 
     @ManyToOne
     @JoinColumn(name = "chasse_id")

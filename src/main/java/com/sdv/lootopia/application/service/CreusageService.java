@@ -45,26 +45,12 @@ public class CreusageService {
                 chasse.getCache().getLatitude(), chasse.getCache().getLongitude()
         );
 
-        // met à jour la solde du joueur si le creusage a couté des couronnes
-        Double nouvelleSoldeJoueur = joueur.getSoldeCouronnes() - dto.getCoutEnCouronnes();
-        joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
-
-
-        // et log la transaction
-        TransactionCouronnes tx = new TransactionCouronnes();
-        tx.setUtilisateur(joueur);
-        tx.setMontant(dto.getCoutEnCouronnes());
-        tx.setTypeOperation(TransactionCouronnes.TypeOperation.DEBIT);
-        tx.setCommentaire("Montant payé pour creuser dans " + chasse.getTitre());
-        tx.setDateMouvement(LocalDateTime.now());
-        transactionCouronnesRepository.save(tx);
-
         Creusage creusage = new Creusage();
         creusage.setDate(LocalDateTime.now());
         creusage.setParticipation(participation);
-        creusage.setCoutEnCouronnes(dto.getCoutEnCouronnes());
         creusage.setDistanceErreurM(distance);
 
+        Double soldeJoueur = joueur.getSoldeCouronnes();
         if (distance <= DISTANCE_MAX_METRES) {
             TransactionCouronnes tx1 = new TransactionCouronnes();
             tx1.setUtilisateur(joueur);
@@ -88,17 +74,17 @@ public class CreusageService {
             creusageRepository.save(creusage);
 
             // met à jour la solde du joueur si le creusage est réussi et qu'il a gaigné
-            nouvelleSoldeJoueur += chasse.getCache().getMontantRecompense();
-            joueur.setSoldeCouronnes(nouvelleSoldeJoueur);
+            soldeJoueur += chasse.getCache().getMontantRecompense();
+            joueur.setSoldeCouronnes(soldeJoueur);
             utilisateurRepository.save(joueur);
 
-            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), nouvelleSoldeJoueur,creusage.getDistanceErreurM());
+            return new CreusageResponseDTO(true, chasse.getCache().getMessageCacheTrouve(), chasse.getCache().getMontantRecompense(), soldeJoueur, creusage.getDistanceErreurM());
         }
         creusage.setReussi(false);
         creusage.setDistanceErreurM(distance);
         creusageRepository.save(creusage);
         utilisateurRepository.save(joueur);
-        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, nouvelleSoldeJoueur, creusage.getDistanceErreurM());
+        return new CreusageResponseDTO(false, "Dommage, rien ici. Essayez encore !", 0.0, creusage.getDistanceErreurM(), soldeJoueur);
     }
 
     public List<Creusage> getAll() { return creusageRepository.findAll(); }

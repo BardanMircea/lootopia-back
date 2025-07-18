@@ -23,7 +23,5 @@ public class Creusage {
 
     private LocalDateTime date;
     private boolean reussi;
-
-    private Double coutEnCouronnes;
     private Double distanceErreurM;
 }

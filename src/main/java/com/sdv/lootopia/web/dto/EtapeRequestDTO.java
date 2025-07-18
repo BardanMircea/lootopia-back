@@ -18,6 +18,7 @@ public class EtapeRequestDTO {
     private String consigne;
 
     private String passphrase; // uniquement si validation se fait par PASSPHRASE
+    private Double prix_validation_directe;
 
     private Double latitudeCache;   // uniquement si si validation se fait par CACHE
     private Double longitudeCache;  // uniquement si validation se fait par CACHE
