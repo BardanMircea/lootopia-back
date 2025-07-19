@@ -21,10 +21,15 @@ Ce dépôt contient l'implémentation serveur construite pour un **MVP fonctionn
 
 Le projet suit une architecture **hexagonale** claire :
 
+
 src
+
 ├── domain ← Logique métier (entités, enums, ports)
+
 ├── application ← Services métier (cas d’usage)
+
 ├── infrastructure ← Adapters techniques : JPA, sécurité, emails...
+
 ├── web ← Contrôleurs REST + DTOs
 
 
@@ -50,7 +55,6 @@ Ce découpage facilite :
 
 ### 🧩 Étapes
 - Ajout d’étapes à une chasse
-    - Enigme obligatoire
     - Validation possible par : passphrase, coordonnées, ou repère RA (non utilisé pour le MVP)
 
 ### 👤 Participation
@@ -87,11 +91,17 @@ Ce découpage facilite :
 | GET     | `/transactions`   | Liste des transactions couronnes     |
 
 🎯 Fonctionnalités MVP implémentées:
+✅ Création de compte avec activation par email
+✅ Connexion avec JWT
+✅ Rôles : `USER` (par défaut) & `ADMIN`
+✅ Sécurisation des endpoints selon les rôles
 ✅ Création d’une chasse avec étapes
 ✅ Participation d’un joueur
 ✅ Découverte d’une cache → transaction + archivage
 ✅ Authentification avec JWT
-✅ Traçabilité minimale des actions
+✅ Géstion et archivage des transactionns en couronnes
+✅ Traçabilité minimale des actions 
+✅ Archivage local (à faible valeur probante) 
 
 📌 Limitations du MVP (à implémenter plus tard)
 Chasses en monde réel (RA)
@@ -106,9 +116,7 @@ Archivage à valeur probante via tiers (coffre-fort numérique)
 
 MFA / OTP
 
-Interface web frontend (à venir)
-
-🚀 Lancer en local (Docker + MySQL)
+🚀 Lancer en local (Projet Java Spring + MySQL)
 Créer une base lootopia_db
 
 Lancer l’application Spring Boot (mvn spring-boot:run)
