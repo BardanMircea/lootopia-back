@@ -32,8 +32,13 @@ public class ChasseController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Chasse> getChasseById(@PathVariable Long id) {
-        return chasseService.getById(id);
+    public ResponseEntity<?> getChasseById(@PathVariable Long id) {
+        return ResponseEntity.ok(chasseService.getById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?>  updateChasse(@PathVariable Long id, @RequestBody @Valid ChasseRequestDTO chasseRequestDTO) {
+        return ResponseEntity.ok(chasseService.updateChasse(id, chasseRequestDTO));
     }
 
     @PostMapping
@@ -42,7 +47,7 @@ public class ChasseController {
             @AuthenticationPrincipal(expression = "utilisateur") Utilisateur utilisateur
     ) {
         // pour l'instant on se concentre sur les chasses carto
-        if (!dto.getTypeMonde().equalsIgnoreCase("CARTOGRAPHIQUE")) {
+        if (!dto.getMonde().equalsIgnoreCase("CARTOGRAPHIQUE")) {
             return ResponseEntity.badRequest().body(Map.of("message","Seules les chasses cartographiques sont autorisées pour l'instant'."));
         }
 

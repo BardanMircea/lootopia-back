@@ -18,6 +18,8 @@ public class ChasseResponseDTO {
     private Long id;
     private String titre;
     private String description;
+    private Double latitudeCache;
+    private Double longitudeCache;
     private String monde;          // CARTOGRAPHIQUE ou REEL
     private String visibilite;     // PUBLIC ou PRIVE
     private String createur;       // Pseudo de l’organisateur
@@ -28,6 +30,7 @@ public class ChasseResponseDTO {
     private Double montantRecompense;
     private List<EtapeReponseDTO> etapes;
     private Double fraisParticipation;
+    private String typeRecompense;
 
     public static ChasseResponseDTO fromEntity(Chasse chasse) {
         ChasseResponseDTO dto = new ChasseResponseDTO();
@@ -44,6 +47,9 @@ public class ChasseResponseDTO {
         dto.setEtapes(new ArrayList<>());
         dto.setMontantRecompense(chasse.getCache().getMontantRecompense());
         dto.setFraisParticipation(chasse.getFraisParticipation());
+        dto.setLatitudeCache(chasse.getCache().getLatitude());
+        dto.setLongitudeCache(chasse.getCache().getLongitude());
+        dto.setTypeRecompense(chasse.getCache().getTypeRecompense().toString());
 
         if(chasse.getEtapes() != null)
             for (Etape e : chasse.getEtapes()) dto.getEtapes().add(EtapeReponseDTO.fromEntity(e));

@@ -59,7 +59,7 @@ public class DataSeeder {
             chasse1.setDescription("Trouve le coffre caché");
             chasse1.setTitre("Chasse au trésor 1");
             chasse1.setOrganisateur(vlad);
-            chasse1.setMaxParticipants(6);
+            chasse1.setMaxParticipants("6");
             chasse1.setFraisParticipation(25.0);
             chasse1.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
             chasse1.setDateDebut(LocalDateTime.now().minusDays(2));
@@ -69,7 +69,7 @@ public class DataSeeder {
             chasse2.setDescription("Chasse des ruines");
             chasse2.setTitre("Mystère archéologique");
             chasse2.setOrganisateur(vlad);
-            chasse2.setMaxParticipants(10);
+            chasse2.setMaxParticipants("10");
             chasse2.setFraisParticipation(0.0);
             chasse2.setTypeMonde(Chasse.TypeMonde.REEL);
             chasse2.setDateDebut(LocalDateTime.now().minusDays(6));
@@ -79,7 +79,7 @@ public class DataSeeder {
             chasse3.setDescription("Chasse3");
             chasse3.setTitre("Chasse 3");
             chasse3.setOrganisateur(mircea);
-            chasse3.setMaxParticipants(12);
+            chasse3.setMaxParticipants("Illimité");
             chasse3.setFraisParticipation(30.0);
             chasse3.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
             chasse3.setDateDebut(LocalDateTime.now().minusDays(2));
@@ -89,7 +89,7 @@ public class DataSeeder {
             chasse4.setDescription("Chasse 4");
             chasse4.setTitre("Mystère 4");
             chasse4.setOrganisateur(vlad);
-            chasse4.setMaxParticipants(8);
+            chasse4.setMaxParticipants("Illimité");
             chasse4.setFraisParticipation(10.0);
             chasse4.setTypeMonde(Chasse.TypeMonde.REEL);
             chasse4.setDateDebut(LocalDateTime.now().minusDays(6));
@@ -99,7 +99,7 @@ public class DataSeeder {
             chasse5.setDescription("Trouve le coffre caché 5");
             chasse5.setTitre("Chasse au trésor 5");
             chasse5.setOrganisateur(mircea);
-            chasse5.setMaxParticipants(15);
+            chasse5.setMaxParticipants("150");
             chasse5.setFraisParticipation(20.0);
             chasse5.setTypeMonde(Chasse.TypeMonde.CARTOGRAPHIQUE);
             chasse5.setDateDebut(LocalDateTime.now().minusDays(3));
@@ -109,7 +109,7 @@ public class DataSeeder {
             chasse6.setDescription("Chasse des ruines 6");
             chasse6.setTitre("Mystère archéologique 6");
             chasse6.setOrganisateur(vlad);
-            chasse6.setMaxParticipants(50);
+            chasse6.setMaxParticipants("50");
             chasse6.setFraisParticipation(25.0);
             chasse6.setTypeMonde(Chasse.TypeMonde.REEL);
             chasse6.setDateDebut(LocalDateTime.now().minusDays(5));

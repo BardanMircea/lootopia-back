@@ -19,7 +19,7 @@ public class Chasse {
 
     private String titre;
     private String description;
-    private Integer maxParticipants;
+    private String maxParticipants;
 
     @ManyToOne
     @JoinColumn(name = "organisateur_id")
@@ -53,7 +53,7 @@ public class Chasse {
     }
 
     public enum Visibilite {
-        PUBLIC, PRIVATE
+        PUBLIC, PRIVE
     }
 
     public enum Statut {
