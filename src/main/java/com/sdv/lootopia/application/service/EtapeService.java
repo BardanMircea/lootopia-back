@@ -41,7 +41,7 @@ public class EtapeService {
         etape.setPassphrase(dto.getPassphrase());
         etape.setLatitudeCache(dto.getLatitudeCache());
         etape.setLongitudeCache(dto.getLongitudeCache());
-        etape.setPrixValidationDirecte(dto.getPrix_validation_directe());
+        etape.setPrixValidationDirecte(dto.getPrixValidationDirecte());
 
         etapeRepository.save(etape);
 
