@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface JpaUtilisateurRepository extends JpaRepository<Utilisateur, Long>{
     Optional<Utilisateur> findByEmail(String email);
     Optional<Utilisateur> findByActivationToken(String activationToken);
+    Integer deleteUtilisateurById(Long id);
 }

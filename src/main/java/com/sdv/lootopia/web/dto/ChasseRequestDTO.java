@@ -63,7 +63,8 @@ public class ChasseRequestDTO {
         chasse.getCache().setMontantRecompense(dto.getMontantRecompense());
         chasse.getCache().setMessageCacheTrouve(dto.getMessageCacheTrouve());
         chasse.getCache().setTypeRecompense(Cache.TypeRecompense.valueOf(dto.getTypeRecompense()));
-        chasse.setMaxParticipants(dto.getNombreParticipants());
+        if( dto.getNombreParticipants() != null && Integer.parseInt(dto.getNombreParticipants()) != 0)
+            chasse.setMaxParticipants(dto.getNombreParticipants());
         chasse.setFraisParticipation(dto.getFraisParticipation());
         chasse.setTypeMonde(Chasse.TypeMonde.valueOf(dto.getMonde()));
         chasse.setVisibilite(Chasse.Visibilite.valueOf(dto.getVisibilite()));

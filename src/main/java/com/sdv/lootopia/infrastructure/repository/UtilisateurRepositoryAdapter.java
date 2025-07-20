@@ -4,6 +4,7 @@ import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.domain.ports.UtilisateurRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,5 +29,15 @@ public class UtilisateurRepositoryAdapter implements UtilisateurRepository {
     @Override
     public Optional<Utilisateur> findByActivationToken(String token) {
         return jpa.findByActivationToken(token);
+    }
+
+    @Override
+    public Integer deleteById(Long userId) {
+        return jpa.deleteUtilisateurById(userId);
+    }
+
+    @Override
+    public List<Utilisateur> getAll() {
+        return jpa.findAll();
     }
 }

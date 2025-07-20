@@ -27,8 +27,11 @@ public class Utilisateur {
     private boolean compteActif = Boolean.FALSE;
     private boolean rgpdConsent;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "utilisateur",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participation> participations;
+
+    @OneToMany(mappedBy = "organisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Chasse> chasses;
 
     private boolean isPartenaire = Boolean.FALSE;
     private boolean mfaActive = Boolean.FALSE;

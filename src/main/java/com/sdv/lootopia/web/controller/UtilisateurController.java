@@ -1,12 +1,9 @@
 package com.sdv.lootopia.web.controller;
 
-import com.sdv.lootopia.domain.model.Utilisateur;
 import com.sdv.lootopia.application.service.UtilisateurService;
 import com.sdv.lootopia.web.dto.UtilisateurResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/utilisateurs")

@@ -1,16 +1,24 @@
 package com.sdv.lootopia.web.controller;
 
+import com.sdv.lootopia.application.service.UtilisateurService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/administration")
+@RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
 
-    @GetMapping("/dashboard")
-    public ResponseEntity<String> getDashboard() {
-        return ResponseEntity.ok("Bienvenue dans le tableau de bord administrateur !");
+    private final UtilisateurService utilisateurService;
+
+    @GetMapping("/users")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(this.utilisateurService.getAll());
+    }
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        return ResponseEntity.ok(this.utilisateurService.deleteUserById(id));
     }
 }
