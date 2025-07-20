@@ -8,4 +8,6 @@ public interface ProgressionRepository {
     List<Progression> findAll();
     Optional<Progression> findById(Long id);
     Progression save(Progression progression);
+
+    void deleteAll(List<Progression> progressions);
 }

@@ -30,4 +30,9 @@ public class TransactionRepositoryAdapter implements TransactionCouronnesReposit
     public TransactionCouronnes save(TransactionCouronnes t) {
         return jpa.save(t);
     }
+
+    @Override
+    public void deleteAll(List<TransactionCouronnes> transactions) {
+        jpa.deleteAll();
+    }
 }

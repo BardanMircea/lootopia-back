@@ -18,4 +18,9 @@ public class ProgressionRepositoryAdapter implements ProgressionRepository {
     public List<Progression> findAll() { return jpa.findAll(); }
     public Optional<Progression> findById(Long id) { return jpa.findById(id); }
     public Progression save(Progression e) { return jpa.save(e); }
+
+    @Override
+    public void deleteAll(List<Progression> progressions) {
+        jpa.deleteAll();
+    }
 }

@@ -21,7 +21,7 @@ public class Chasse {
     private String description;
     private String maxParticipants;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "organisateur_id")
     private Utilisateur organisateur;
 

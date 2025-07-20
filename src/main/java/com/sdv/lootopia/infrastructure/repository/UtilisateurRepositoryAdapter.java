@@ -40,4 +40,14 @@ public class UtilisateurRepositoryAdapter implements UtilisateurRepository {
     public List<Utilisateur> getAll() {
         return jpa.findAll();
     }
+
+    @Override
+    public Optional<Utilisateur> findById(Long userId) {
+        return jpa.findById(userId);
+    }
+
+    @Override
+    public void delete(Utilisateur utilisateur) {
+        jpa.delete(utilisateur);
+    }
 }

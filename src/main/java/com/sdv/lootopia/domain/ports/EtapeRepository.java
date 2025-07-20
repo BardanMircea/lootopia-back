@@ -10,4 +10,6 @@ public interface EtapeRepository {
     Optional<Etape> findById(Long id);
     Etape save(Etape etape);
     List<Etape> findByChasseId(Long chasseId);
+
+    void saveAll(List<Etape> etapes);
 }

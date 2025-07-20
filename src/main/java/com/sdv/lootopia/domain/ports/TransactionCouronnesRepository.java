@@ -11,4 +11,6 @@ public interface TransactionCouronnesRepository {
     Optional<TransactionCouronnes> findById(Long id);
 
     TransactionCouronnes save(TransactionCouronnes t);
+
+    void deleteAll(List<TransactionCouronnes> transactions);
 }

@@ -23,5 +23,10 @@ public class EtapeRepositoryAdapter implements EtapeRepository {
     public List<Etape> findByChasseId(Long chasseId) {
         return jpa.findByChasseId(chasseId);
     }
+
+    @Override
+    public void saveAll(List<Etape> etapes) {
+        jpa.saveAll(etapes);
+    }
 }
 

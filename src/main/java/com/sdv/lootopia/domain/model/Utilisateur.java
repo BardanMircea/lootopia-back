@@ -36,6 +36,10 @@ public class Utilisateur {
     private boolean isPartenaire = Boolean.FALSE;
     private boolean mfaActive = Boolean.FALSE;
 
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TransactionCouronnes> transactions;
+
+
     @Column(nullable = false)
     private Double soldeCouronnes = 0.0;
 

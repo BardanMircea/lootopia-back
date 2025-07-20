@@ -14,4 +14,8 @@ public interface UtilisateurRepository {
     Integer deleteById(Long userId);
 
     List<Utilisateur> getAll();
+
+    Optional<Utilisateur> findById(Long userId);
+
+    void delete(Utilisateur utilisateur);
 }
